@@ -1,986 +1,1876 @@
-<!DOCTYPE html>
-<html lang="en" >
+ <!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Make Money Co — Account Fixed</title>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1" />
+  <title>Make Money Co</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
+    :root{
       --bg: #0f1720;
       --panel: rgba(255,255,255,0.04);
+      --panel-solid: #0b1218;
       --accent: #ffd43b;
-      --text-light: #cfe6ff;
-      --text-muted: #8fa9cb;
-      --btn-bg: #22272b;
-      --btn-hover: #444b52;
-      --green-1: #28a745;
-      --green-2: #218838;
-      --font-primary: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
-      --font-display: 'Bungee', cursive;
+      --text: #cfe6ff;
+      --muted: #8fa9cb;
+      --btn: #22272b;
+      --btn-h: #3a4248;
+      --ok: #36d399;
+      --warn: #ff8f4f;
+      --danger: #ff5050;
+      --good-1: #28a745;
+      --good-2: #218838;
+      --card-br: 12px;
+      --font: 'Poppins', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      --display: 'Bungee', cursive;
+      --ring: rgba(255,255,255,.12);
     }
-    * { box-sizing: border-box; }
-    html,body { height:100%; }
-    body {
-      margin: 0;
-      min-height: 100vh;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      min-height:100vh;
       background:
-        radial-gradient(1200px 500px at 10% 10%, rgba(255,215,0,0.03), transparent 10%),
-        radial-gradient(800px 400px at 90% 80%, rgba(0,200,255,0.02), transparent 10%),
-        linear-gradient(180deg, var(--bg), #050608);
-      font-family: var(--font-primary);
-      color: var(--text-light);
-      display: flex;
-      justify-content: center;
-      padding: 20px;
+        radial-gradient(1200px 500px at 10% 10%, rgba(255,215,0,0.05), transparent 10%),
+        radial-gradient(800px 400px at 90% 80%, rgba(0,200,255,0.03), transparent 10%),
+        linear-gradient(180deg, var(--bg), #07090e 60%);
+      color:var(--text);
+      font-family:var(--font);
+      display:flex;
+      justify-content:center;
+      padding:18px;
     }
-    .container {
-      width: 420px;
+    .container{
+      width: 440px;
       max-width: 96vw;
       background: var(--panel);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.7);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--card-br);
+      box-shadow: 0 12px 40px rgba(0,0,0,.65);
+      padding: 16px;
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+      position:relative;
+      overflow:hidden;
     }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+
+    /* Top bar */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      position:relative;
+      z-index: 3;
+      min-height: 44px;
     }
-    h1 {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      margin: 0;
-      color: var(--accent);
-      text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    .header-left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+      flex:1 1 auto;
     }
-    .balance {
-      text-align: right;
-      font-size: 1.1rem;
-      user-select: none;
+    .header-right{ display:flex; align-items:center; gap:8px; }
+
+    /* Menu */
+    .hamburger{ position:relative; z-index: 4; }
+    .hamburger button{
+      display:flex; align-items:center; gap:8px;
+      background: var(--btn); color:var(--text);
+      border:none; border-radius:10px; padding:8px 10px;
+      cursor:pointer; user-select:none;
+      box-shadow: 0 6px 20px rgba(0,0,0,.3);
+      white-space:nowrap;
     }
-    .balance span { font-weight:700; font-size:1.5rem; display:block; margin-top:4px; }
+    .hamburger button:hover{ background:var(--btn-h); }
+    .hamburger .icon{ width:18px; height:12px; position:relative; }
+    .hamburger .icon::before,
+    .hamburger .icon::after,
+    .hamburger .icon span{
+      content:""; position:absolute; left:0; right:0; height:2px;
+      background:var(--text); border-radius:2px;
+    }
+    .hamburger .icon::before{ top:0 }
+    .hamburger .icon span{ top:5px }
+    .hamburger .icon::after{ bottom:0 }
+
+    .dropdown{
+      position:absolute; top:42px; left:0;
+      min-width:210px;
+      background: var(--panel-solid);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:10px;
+      overflow:hidden;
+      display:none;
+      z-index:50;
+    }
+    .dropdown.show{ display:block }
+    .dropdown .group-title{
+      padding:8px 12px; font-weight:900; color:var(--muted);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background: #0a1016;
+    }
+    .dropdown button{
+      width:100%; text-align:left; padding:10px 12px;
+      background:transparent; color:var(--text); border:none;
+      font-weight:700; cursor:pointer; font-size:.95rem;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .dropdown button:hover{ background: rgba(255,255,255,.06); }
+
+    /* Balance */
+    .balance{
+      text-align:left;
+      font-size:.95rem;
+      color:var(--muted);
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1 1 auto;
+      min-width:0;
+    }
+    .balance b{
+      display:block;
+      font-size:1.45rem;
+      color:var(--text);
+      line-height:1.05;
+      max-width:100%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
 
     /* Tabs */
-    nav.tabs { display:flex; gap:6px; border-bottom:1.5px solid rgba(255,255,255,0.1); }
-    nav.tabs button {
-      flex:1; background:var(--btn-bg); border:none; padding:10px 0;
-      font-weight:600; color:var(--text-muted); cursor:pointer; font-size:0.9rem;
-      border-radius:8px 8px 0 0; transition: background-color 0.3s, color 0.3s; user-select:none;
+    nav.tabs{
+      display:flex; gap:8px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      position:sticky; top:0; background:linear-gradient(180deg, rgba(11,18,24,.9), rgba(11,18,24,.8));
+      z-index:2; padding-top:2px;
     }
-    nav.tabs button.active { background:var(--accent); color:#081219; box-shadow:0 6px 20px rgba(0,0,0,0.4); border-bottom:none; }
-
-    /* Sections */
-    section { display:none; flex-direction:column; gap:12px; }
-    section.active { display:flex; }
+    nav.tabs button{
+      flex:1; background:var(--btn); color:var(--muted);
+      border:none; padding:10px 0; border-radius:10px 10px 0 0;
+      font-weight:700; cursor:pointer; user-select:none;
+    }
+    nav.tabs button.active{
+      background:var(--accent); color:#0b1218;
+      box-shadow:0 8px 24px rgba(0,0,0,.35);
+    }
+    section[role="tabpanel"]{ display:none; }
+    section[role="tabpanel"].active{ display:block; }
 
     /* Clicker */
-    #clicker-section { text-align:center; }
-    #money-bag {
-      margin: 20px auto 16px; width:140px; height:140px; background:linear-gradient(145deg,#3a3a3a,#252525);
-      border-radius:50%; box-shadow: inset 0 6px 15px #ffcf52, 0 4px 15px rgba(255,208,0,0.5);
-      display:flex; align-items:center; justify-content:center; font-size:70px; color:#ffcf52; cursor:pointer;
-      position:relative; user-select:none;
+    #clicker-section{ display:flex; flex-direction:column; gap:12px; user-select:none; }
+    #money-bag{
+      margin: 16px auto 10px;
+      width: 150px; height:150px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:74px; cursor:pointer;
+      background: radial-gradient(circle at 30% 30%, #444, #222 70%);
+      box-shadow:
+        inset 0 10px 22px rgba(255,215,0,.55),
+        0 10px 28px rgba(255,208,0,.35);
+      color:#ffd45a;
+      transition: transform .08s ease, box-shadow .2s ease;
+      outline: none;
+      position:relative;
     }
-    #money-bag:hover { box-shadow: inset 0 6px 18px #ffd64d, 0 6px 24px rgba(255,215,0,0.8); transform:scale(1.05); transition:0.15s ease; }
+    #money-bag:hover{ transform:scale(1.05); box-shadow: inset 0 12px 26px rgba(255,215,0,.65), 0 12px 30px rgba(255,208,0,.55) }
+    #money-bag:active{ transform: scale(0.97); }
 
-    #coins-info { font-size:1.1rem; font-weight:600; margin-bottom:6px; }
-    #cpc-info { color:var(--text-muted); font-size:0.9rem; margin-bottom:16px; }
+    /* Spaced stats (no CPS text shown) */
+    .stats-row{
+      display:flex; gap:12px; justify-content:space-between; align-items:center;
+      flex-wrap:wrap;
+    }
+    .stat{
+      flex:1 1 45%;
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:10px;
+      padding:8px 10px;
+      min-width:150px;
+    }
+    .stat .label{ color:var(--muted); font-size:.9rem }
+    .stat .value{ font-weight:900; font-size:1.05rem }
 
-    #upgrades { display:flex; flex-direction:column; gap:8px; max-height:260px; overflow-y:auto; padding-right:6px; }
-    .upgrade { background:var(--btn-bg); border-radius:10px; padding:10px 14px; cursor:pointer; transition:background-color 0.3s; display:flex; justify-content:space-between; align-items:center; user-select:none; }
-    .upgrade:hover:not(.disabled) { background:var(--btn-hover); }
-    .upgrade.disabled { opacity:0.5; cursor:not-allowed; }
-    .upgrade-name { font-weight:700; font-size:0.95rem; }
-    .upgrade-info { font-size:0.8rem; color:var(--text-muted); margin-left:8px; flex-grow:1; text-align:center; }
-    .upgrade-cost { font-weight:700; min-width:70px; text-align:right; font-size:0.9rem; color:var(--accent); }
+    /* (Old cps badge removed visually) */
+    #cps-indicator{ display:none !important; }
 
-    #rebirth-btn { margin-top:14px; padding:10px 18px; font-weight:700; font-size:1rem; background:linear-gradient(180deg,var(--green-1),var(--green-2)); border:none; border-radius:10px; color:white; cursor:pointer; user-select:none; transition:filter 0.2s; }
-    #rebirth-btn:disabled { filter:grayscale(70%); cursor:not-allowed; opacity:0.6; }
+    /* Upgrades list (moved to Upgrades tab) */
+    #upgrades{
+      display:flex; flex-direction:column; gap:8px;
+      max-height:60vh;
+      overflow:auto; padding-right:6px;
+      overscroll-behavior:contain;
+    }
+    #upgrades::-webkit-scrollbar{ width:8px }
+    #upgrades::-webkit-scrollbar-thumb{ background:var(--accent); border-radius:6px }
+    .upgrade{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      background:var(--btn); border-radius:10px; padding:10px 12px; cursor:pointer;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .upgrade:hover:not(.disabled){ background:var(--btn-h) }
+    .upgrade.disabled{ opacity:.55; cursor:not-allowed }
+    .upgrade .name{ font-weight:800 }
+    .upgrade .info{ color:var(--muted); font-size:.85rem; text-align:center; flex:1 }
+    .upgrade .cost{ color:var(--accent); font-weight:800; min-width:120px; text-align:right }
+
+    /* Rebirth */
+    #rebirth-wrap{ padding-top:8px; }
+    #rebirth-btn{
+      margin-top:8px; padding:12px 14px; width:100%;
+      font-weight:900; font-size:1rem; border:none; border-radius:10px; color:#fff;
+      background: linear-gradient(180deg, var(--good-1), var(--good-2));
+      cursor:pointer; user-select:none;
+      box-shadow: 0 3px 0 rgba(0,0,0,.22);
+    }
+    #rebirth-btn:disabled{ filter: grayscale(80%); opacity:.6; cursor:not-allowed; }
+    #rebirth-need{ text-align:center; color:var(--muted); font-size:.9rem; margin-top:2px; }
 
     /* Gambling */
-    #gambling-section { display:flex; flex-direction:column; gap:12px; }
-    .gambling-tabs { display:flex; gap:10px; justify-content:center; margin-bottom:12px; }
-    .gambling-tabs button { flex:1; background:var(--btn-bg); border:none; padding:8px 0; font-weight:600; color:var(--text-muted); cursor:pointer; font-size:0.9rem; border-radius:10px; user-select:none; transition:background-color 0.3s, color 0.3s; }
-    .gambling-tabs button.active { background:var(--accent); color:#081219; box-shadow:0 6px 20px rgba(0,0,0,0.4); }
+    #gambling-section{ display:flex; flex-direction:column; gap:12px; }
+    .gambling-tabs{ display:flex; gap:8px; }
+    .gambling-tabs button{
+      flex:1; border:none; border-radius:10px; background:var(--btn);
+      color:var(--muted); font-weight:800; padding:8px 0; cursor:pointer;
+    }
+    .gambling-tabs button.active{ background:var(--accent); color:#0b1218 }
 
     /* Slot */
-    #slot-machine-container { display:flex; flex-direction:column; gap:10px; text-align:center; }
-    #slot-reels { font-size:50px; letter-spacing:18px; margin:10px 0; user-select:none; }
-    #slot-reward { font-weight:700; font-size:1.1rem; min-height:30px; color:var(--accent); user-select:none; }
-    #slot-bet { width:100%; padding:10px; border-radius:8px; border:none; background:var(--btn-bg); color:var(--text-light); font-size:1rem; margin-bottom:10px; text-align:center; user-select:none; }
-    #slot-spin-btn { padding:12px; font-weight:700; background:linear-gradient(180deg,var(--green-1),var(--green-2)); border:none; border-radius:10px; color:white; cursor:pointer; user-select:none; transition:filter 0.2s; }
-    #slot-spin-btn:disabled { filter:grayscale(70%); cursor:not-allowed; opacity:0.6; }
+    #slot-machine{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+    #slot-bet{ width:100%; background:var(--btn); color:var(--text); border:none; border-radius:10px; padding:10px; text-align:center; }
+    #slot-spin{ padding:10px 12px; border:none; border-radius:10px; color:#fff; background:linear-gradient(180deg,var(--good-1),var(--good-2)); font-weight:900; cursor:pointer; }
+    #slot-spin:disabled{ filter:grayscale(90%); opacity:.6; cursor:not-allowed; }
+    #slot-reels{
+      font-size:54px; letter-spacing:18px; user-select:none;
+      display:block; text-align:center; line-height:1;
+      width:100%;
+    }
+    #slot-msg{ min-height:28px; color:var(--accent); font-weight:800; text-align:center; width:100%; }
 
     /* Mines */
-    #mines-container { display:flex; flex-direction:column; gap:10px; user-select:none; }
-    #mines-controls { display:flex; gap:8px; justify-content:space-between; align-items:center; margin-bottom:10px; }
-    #mines-bet { flex:1; padding:8px; border-radius:8px; border:none; background:var(--btn-bg); color:var(--text-light); font-size:1rem; text-align:center; }
-    #mines-mode { flex:1; padding:8px; border-radius:8px; border:none; background:var(--btn-bg); color:var(--text-light); font-size:1rem; user-select:none; }
-    #mines-start-btn, #mines-cashout-btn { flex:1; padding:10px; border-radius:10px; border:none; font-weight:700; font-size:1rem; color:white; cursor:pointer; user-select:none; transition:filter 0.2s; }
-    #mines-start-btn { background:linear-gradient(180deg,var(--green-1),var(--green-2)); }
-    #mines-cashout-btn { background:#555; }
-    #mines-start-btn:disabled, #mines-cashout-btn:disabled { filter:grayscale(70%); cursor:not-allowed; opacity:0.6; }
+    #mines{ display:flex; flex-direction:column; gap:10px; }
+    .row{ display:flex; gap:8px; align-items:center; }
+    .row .input{ flex:1; background:var(--btn); color:var(--text); border:none; border-radius:10px; padding:10px; text-align:center; }
+    .row .btn{ background:var(--btn); color:var(--text); border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:10px; cursor:pointer; font-weight:800; }
+    .row .btn.go{ background:linear-gradient(180deg,var(--good-1),var(--good-2)); color:#fff; border:none; }
+    .row .btn:disabled{ filter:grayscale(90%); opacity:.6; cursor:not-allowed; }
+    #mines-grid{ display:grid; grid-template-columns: repeat(5, 52px); gap:8px; justify-content:center; }
+    .mines-cell{
+      width:52px; height:52px; border-radius:10px; background:var(--btn);
+      display:flex; align-items:center; justify-content:center; cursor:pointer;
+      font-size:26px; border:2px solid transparent; font-weight:900; color:var(--text);
+      user-select:none;
+    }
+    .mines-cell:hover:not(.revealed){ background:var(--btn-h); }
+    .mines-cell.revealed.safe{ background:#ffd43b; color:#402b00 }
+    .mines-cell.revealed.bomb{ background:var(--danger); color:#320000 }
+    #mines-stats{ text-align:center; color:var(--muted) }
+    #mines-stats b{ color:var(--accent) }
 
-    #mines-grid { display:grid; grid-template-columns:repeat(5,50px); grid-gap:8px; justify-content:center; }
-    .mines-cell { width:50px; height:50px; background:var(--btn-bg); border-radius:8px; font-size:28px; color:var(--text-light); cursor:pointer; display:flex; align-items:center; justify-content:center; user-select:none; transition:background-color 0.3s; border:2px solid transparent; font-weight:700; }
-    .mines-cell:hover:not(.revealed) { background:var(--btn-hover); }
-    .mines-cell.revealed.gem { background:#ffd43b; color:#3a2e00; cursor:default; }
-    .mines-cell.revealed.bomb { background:#ff5050; color:#400000; cursor:default; }
+    /* Goals */
+    #goals{ display:flex; flex-direction:column; gap:10px; }
+    .goal-mult-row{
+      display:grid; gap:6px; justify-content:center; align-content:center;
+    }
+    .goal-mult{
+      min-width:48px; height:24px; border-radius:999px;
+      display:flex; align-items:center; justify-content:center;
+      padding:0 6px; font-size:.78rem; font-weight:900;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+      user-select:none;
+    }
+    .goal-mult.active{
+      outline:2px solid var(--accent); color:#0b1218; background:var(--accent);
+    }
 
-    #mines-stats { font-size:0.9rem; text-align:center; color:var(--text-muted); user-select:none; margin-top:6px; }
-    #mines-stats span { font-weight:600; color:var(--accent); }
+    #goals-grid-wrap{
+      display:flex; flex-direction:column; gap:8px; align-items:center; justify-content:center;
+    }
+    #goals-grid{ display:grid; gap:6px; justify-content:center; }
+    .goal{
+      width:48px; height:48px; border-radius:10px; background:var(--btn);
+      display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:24px; font-weight:900;
+      user-select:none; color:var(--text);
+    }
+    .goal:hover:not(.revealed){ background:var(--btn-h) }
+    .goal.revealed.safe{ background:#ffd43b; color:#402b00 }
+    .goal.revealed.bomb{ background:var(--danger); color:#320000 }
+    #goals-stat{ text-align:center; color:var(--muted) }
+    #goals-stat b{ color:var(--accent) }
 
-    /* Account Section - replaced with tabbed login/register UI */
-    #account-section { color:var(--text-muted); gap:8px; display:flex; flex-direction:column; }
-    .account-panel { background:rgba(255,255,255,0.02); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:8px; }
-    .account-row { display:flex; gap:8px; align-items:center; }
-    .account-input { flex:1; padding:8px; border-radius:8px; border:none; background:var(--btn-bg); color:var(--text-light); }
-    .account-btn { padding:8px 10px; border-radius:8px; border:none; background:var(--accent); color:#081219; font-weight:700; cursor:pointer; }
-    .account-small { font-size:0.85rem; color:var(--text-muted); }
+    /* Info */
+    #info-section{ color:var(--muted) }
 
-    /* internal account tabs */
-    .acct-tabs { display:flex; gap:8px; margin-bottom:6px; }
-    .acct-tab { flex:1; background:var(--btn-bg); border:none; padding:8px; color:var(--text-muted); border-radius:8px; cursor:pointer; font-weight:700; }
-    .acct-tab.active { background:var(--accent); color:#081219; }
+    /* Account */
+    #account-section{ display:flex; flex-direction:column; gap:12px; }
+    .card{
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px; padding:10px;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .acct-tabs{ display:flex; gap:8px; }
+    .acct-tabs .tab{ flex:1; border:none; background:var(--btn); color:var(--muted); border-radius:10px; padding:8px; font-weight:900; cursor:pointer; }
+    .acct-tabs .tab.active{ background:var(--accent); color:#0b1218 }
+    .form{ display:flex; flex-direction:column; gap:8px; }
+    .input{ background:var(--btn); color:var(--text); border:none; border-radius:10px; padding:10px; }
+    .btn{ background:var(--accent); color:#0b1218; border:none; border-radius:10px; padding:10px; font-weight:900; cursor:pointer; }
+    .btn.text{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,.08); }
+    .muted{ color:var(--muted); font-size:.9rem; }
 
-    .acct-form { display:flex; flex-direction:column; gap:8px; }
-    .acct-form.hidden { display:none; }
+    /* Panels (modal) */
+    .panel{
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background: rgba(0,0,0,.58); z-index:999;
+    }
+    .panel.show{ display:flex }
+    .panel .card{ width:440px; max-width:96vw; }
+    .panel h3{ margin:0; color:var(--accent); font-size:1.2rem; }
+
+    /* NEW: Fullscreen leaderboard styling */
+    #panel-leaderboard.panel-full .card{
+      width:100vw; height:100vh; max-width:none; max-height:none;
+      border-radius:0; padding:16px 16px 20px;
+      background: linear-gradient(180deg, rgba(11,18,24,0.92), rgba(11,18,24,0.96));
+      overflow:auto;
+    }
+    .lb-header{
+      display:flex; align-items:center; justify-content:space-between;
+      position:sticky; top:0; background:rgba(11,18,24,0.95);
+      padding-bottom:10px; margin-bottom:10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      z-index:1;
+    }
+    .lb-title{ display:flex; flex-direction:column; gap:4px; }
+    .lb-sub{ color:var(--muted); font-size:.9rem }
+    .lb-grid{
+      display:grid; grid-template-columns: 1fr 1fr; gap:16px;
+    }
+    .lb-col{
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px;
+    }
+    .lb-col h4{ margin:0; font-size:1.05rem; color:var(--accent) }
+    .lb-list{ display:flex; flex-direction:column; gap:6px; max-height:none; overflow:visible; }
+    .lb-row{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      background:var(--btn); border:1px solid rgba(255,255,255,.08);
+      border-radius:10px; padding:8px 10px;
+    }
+    .lb-left b{ margin-right:6px }
+    .lb-empty{ color:var(--muted); }
+    .lb-actions{ display:flex; gap:8px }
+    .lb-actions .btn{ padding:8px 10px }
+
+    @media (max-width:900px){
+      .lb-grid{ grid-template-columns: 1fr; }
+    }
 
     /* Toast */
-    #toast { position:fixed; top:20px; right:20px; background:rgba(0,0,0,0.75); color:white; padding:10px 14px; border-radius:10px; font-weight:700; opacity:0; pointer-events:none; transform:translateY(-20px); transition:opacity 0.3s, transform 0.3s; z-index:9999; user-select:none; }
-    #toast.show { opacity:1; pointer-events:auto; transform:translateY(0); }
-
-    /* Scrollbar for upgrades */
-    #upgrades::-webkit-scrollbar { width:8px; }
-    #upgrades::-webkit-scrollbar-track { background:transparent; }
-    #upgrades::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
-
-    /* Fine print */
-    #footer { text-align:right; font-size:10px; color:var(--text-muted); user-select:none; margin-top:6px; font-style:italic; }
-
-    @media (max-width:480px) {
-      .container { width: 96vw; padding:14px; }
-      #money-bag { width:120px; height:120px; font-size:60px; }
-      #slot-reels { font-size:40px; letter-spacing:14px; }
+    #toast{
+      position:fixed; top:18px; right:18px; background: rgba(0,0,0,.78);
+      color:#fff; padding:10px 14px; border-radius:12px; font-weight:900;
+      opacity:0; transform: translateY(-18px);
+      transition: opacity .25s, transform .25s;
+      z-index:9999; pointer-events:none; user-select:none;
     }
+    #toast.show{ opacity:1; transform: translateY(0) }
+
+    #footer{ text-align:right; color:var(--muted); font-size:10px; font-style:italic; user-select:none; }
+
+    @media (max-width:480px){
+      .container{ width:96vw; padding:12px }
+      #slot-reels{ font-size:44px; letter-spacing:12px }
+      #money-bag{ width:130px; height:130px; font-size:62px }
+      .upgrade .cost{ min-width:96px }
+    }
+
+    .sr-only{ position:absolute; left:-9999px; }
   </style>
 </head>
 <body>
-  <div class="container" role="main" aria-label="Make Money Co game">
-
+  <div class="container" role="main" aria-label="Make Money Co">
     <header>
-      <h1>Make Money Co</h1>
-      <div class="balance" aria-live="polite" aria-atomic="true">
-        Bank: $<span id="balance">0.00</span>
+      <div class="header-left">
+        <!-- MENU -->
+        <div class="hamburger" aria-label="Menu">
+          <button id="menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu-dropdown" title="Menu">
+            <span class="icon"><span></span></span>
+            <span style="font-weight:900; font-size:.9rem; color:var(--muted)">Menu</span>
+          </button>
+          <div id="menu-dropdown" class="dropdown" role="menu" aria-hidden="true">
+            <div class="group-title">Quick Actions</div>
+            <button id="menu-leaderboard" role="menuitem">Leaderboard</button>
+            <button id="menu-admin" role="menuitem">Admin</button>
+            <button id="menu-money" role="menuitem">Money</button>
+          </div>
+        </div>
+
+        <!-- BALANCE -->
+        <div class="balance" aria-live="polite">
+          <span>Bank</span>
+          <b>$<span id="balance">0.00</span></b>
+        </div>
       </div>
+
+      <div class="header-right"></div>
     </header>
 
-    <nav class="tabs" role="tablist" aria-label="Game sections">
-      <button role="tab" aria-selected="true" aria-controls="clicker-section" id="tab-clicker" class="active">Clicker</button>
-      <button role="tab" aria-selected="false" aria-controls="gambling-section" id="tab-gambling">Gambling</button>
-      <button role="tab" aria-selected="false" aria-controls="info-section" id="tab-info">Info</button>
-      <button role="tab" aria-selected="false" aria-controls="account-section" id="tab-account">Account</button>
+    <!-- Tabs (Upgrades inserted between Clicker and Gambling) -->
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button id="tab-clicker" class="active" role="tab" aria-selected="true" aria-controls="clicker-section">Clicker</button>
+      <button id="tab-upgrades" role="tab" aria-selected="false" aria-controls="upgrades-section">Upgrades</button>
+      <button id="tab-gambling" role="tab" aria-selected="false" aria-controls="gambling-section">Gambling</button>
+      <button id="tab-info" role="tab" aria-selected="false" aria-controls="info-section">Info</button>
+      <button id="tab-account" role="tab" aria-selected="false" aria-controls="account-section">Account</button>
     </nav>
 
-    <!-- CLICKER SECTION -->
+    <!-- CLICKER -->
     <section id="clicker-section" class="active" role="tabpanel" aria-labelledby="tab-clicker">
-      <div id="money-bag" aria-label="Money bag, click to earn coins" tabindex="0" role="button" title="Click to earn coins">💰</div>
-      <div id="coins-info" aria-live="polite" aria-atomic="true">Coins Earned: <span id="coins">0.00</span></div>
-      <div id="cpc-info">Coins Per Click: <span id="cpc">1.00</span></div>
-      <div id="upgrades" aria-label="Upgrades list"></div>
-      <button id="rebirth-btn" disabled aria-disabled="true" title="Rebirth to double your coins per click">Rebirth (requires $100,000,000,000)</button>
-    </section>
+      <div id="money-bag" tabindex="0" role="button" aria-label="Click to earn coins">💰</div>
 
-    <!-- GAMBLING SECTION -->
-    <section id="gambling-section" role="tabpanel" aria-labelledby="tab-gambling" aria-hidden="true">
-      <nav class="gambling-tabs" role="tablist" aria-label="Gambling games">
-        <button id="slot-btn" class="active" role="tab" aria-selected="true" aria-controls="slot-machine-container" tabindex="0">Slot Machine</button>
-        <button id="mines-btn" role="tab" aria-selected="false" aria-controls="mines-container" tabindex="-1">Mines Gem Game</button>
-      </nav>
-
-      <!-- Slot Machine -->
-      <div id="slot-machine-container" role="tabpanel" aria-labelledby="slot-btn">
-        <input id="slot-bet" type="number" min="50" step="1" value="50" aria-label="Slot machine bet amount" />
-        <button id="slot-spin-btn" aria-live="polite" aria-atomic="true">Spin 🎰</button>
-        <div id="slot-reels" aria-live="polite" aria-atomic="true" aria-label="Slot reels display">🍒 🍋 🍉</div>
-        <div id="slot-reward" aria-live="polite" aria-atomic="true" style="min-height: 30px;"></div>
+      <!-- spaced stats, cps hidden -->
+      <div class="stats-row" aria-label="Stats">
+        <div class="stat">
+          <div class="label">Coins Earned</div>
+          <div class="value"><b><span id="coins">0.00</span></b></div>
+        </div>
+        <div class="stat">
+          <div class="label">Coins Per Click</div>
+          <div class="value"><b><span id="cpc">0.05</span></b></div>
+        </div>
       </div>
 
-      <!-- Mines Gem Game -->
-      <div id="mines-container" role="tabpanel" aria-labelledby="mines-btn" style="display:none;">
-        <div id="mines-controls">
-          <input id="mines-bet" type="number" min="1" step="1" value="10" aria-label="Mines game bet amount" />
-          <select id="mines-mode" aria-label="Number of bombs">
+      <!-- Rebirth (at bottom) -->
+      <div id="rebirth-wrap">
+        <button id="rebirth-btn" disabled aria-disabled="true" title="Rebirth to multiply your CPC">
+          Rebirth
+        </button>
+        <div id="rebirth-need">Requires: $<span id="rebirth-cost">100,000,000,000</span></div>
+      </div>
+
+      <!-- hidden cps element kept for code hooks, but not visible -->
+      <div id="cps-indicator" aria-hidden="true" class="sr-only">0/10 cps</div>
+    </section>
+
+    <!-- UPGRADES (moved here) -->
+    <section id="upgrades-section" role="tabpanel" aria-labelledby="tab-upgrades" aria-hidden="true" style="display:none">
+      <div id="upgrades" aria-label="Upgrades list"></div>
+    </section>
+
+    <!-- GAMBLING -->
+    <section id="gambling-section" role="tabpanel" aria-labelledby="tab-gambling" aria-hidden="true" style="display:none">
+      <div class="gambling-tabs" role="tablist">
+        <button id="gt-slot" class="active" role="tab" aria-selected="true" aria-controls="slot-machine">Slot Machine</button>
+        <button id="gt-mines" role="tab" aria-selected="false" aria-controls="mines">Mines</button>
+        <button id="gt-goals" role="tab" aria-selected="false" aria-controls="goals">Goals</button>
+      </div>
+
+      <!-- Slot Machine -->
+      <div id="slot-machine" role="tabpanel" aria-labelledby="gt-slot" style="display:block">
+        <input id="slot-bet" class="input" type="number" min="50" step="1" value="50" aria-label="Slot bet amount" />
+        <button id="slot-spin" class="btn go">Spin 🎰</button>
+        <div id="slot-reels" aria-live="polite" aria-atomic="true">🍒 🍋 🍉</div>
+        <div id="slot-msg" aria-live="polite" aria-atomic="true"></div>
+      </div>
+
+      <!-- Mines -->
+      <div id="mines" role="tabpanel" aria-labelledby="gt-mines" style="display:none">
+        <div class="row">
+          <input id="mines-bet" class="input" type="number" min="1" step="1" value="10" aria-label="Mines bet" />
+          <select id="mines-bombs" class="input" aria-label="Mines count">
             <option value="1">1 Bomb</option>
             <option value="2">2 Bombs</option>
             <option value="3">3 Bombs</option>
           </select>
-          <button id="mines-start-btn">Start</button>
-          <button id="mines-cashout-btn" disabled>Cash Out</button>
         </div>
-        <div id="mines-grid" aria-label="Mines grid" role="grid" aria-readonly="true"></div>
-        <div id="mines-stats" aria-live="polite" aria-atomic="true">
-          Gems Found: <span id="mines-gems">0</span> &nbsp;|&nbsp; Multiplier: <span id="mines-multiplier">1.00x</span> &nbsp;|&nbsp; Potential Win: $<span id="mines-money">0.00</span>
+        <div class="row">
+          <button id="mines-start" class="btn go">Start</button>
+          <button id="mines-cashout" class="btn" disabled>Cash Out</button>
         </div>
+        <div id="mines-grid" role="grid" aria-readonly="true"></div>
+        <div id="mines-stats">Gems: <b id="mines-gems">0</b> &nbsp;|&nbsp; Mult: <b id="mines-mult">1.00x</b> &nbsp;|&nbsp; Potential: $<b id="mines-pot">0.00</b></div>
+      </div>
+
+      <!-- Goals -->
+      <div id="goals" role="tabpanel" aria-labelledby="gt-goals" style="display:none">
+        <div class="row">
+          <input id="goals-bet" class="input" type="number" min="1" step="1" value="10" aria-label="Goals bet" />
+          <select id="goals-size" class="input" aria-label="Goals grid size">
+            <option value="7x4" selected>7 × 4</option>
+            <option value="10x5">10 × 5</option>
+          </select>
+        </div>
+        <div class="row">
+          <button id="goals-start" class="btn go">Start</button>
+          <button id="goals-cashout" class="btn" disabled>Cash Out</button>
+        </div>
+
+        <div id="goals-grid-wrap">
+          <div class="goal-mult-row" id="goals-mult-row"></div>
+          <div id="goals-grid" role="grid" aria-readonly="true"></div>
+        </div>
+
+        <div id="goals-stat">Column: <b id="goals-col">—</b> &nbsp;|&nbsp; Cash Mult: <b id="goals-mult">—</b> &nbsp;|&nbsp; Potential: $<b id="goals-pot">0.00</b></div>
       </div>
     </section>
 
-    <!-- INFO SECTION -->
-    <section id="info-section" role="tabpanel" aria-labelledby="tab-info" aria-hidden="true" style="color: var(--text-muted); font-size: 0.9rem;">
-      <p><strong>Make Money Co</strong> - Created by Koby Webster</p>
-      <p>This game combines a coin clicker, slot machine, and mines gem game.</p>
-      <p>Earn coins by clicking, gamble them, upgrade your clicks, and rebirth to progress faster.</p>
-      <hr />
-      <p><strong>Rebirth</strong> lets you reset progress in exchange for doubling your coins per click permanently.</p>
-      <p>At 100 Billion coins, you can rebirth to double your coins per click permanently.</p>
-      <p>Keep rebirthing to grow faster!</p>
+    <!-- INFO -->
+    <section id="info-section" role="tabpanel" aria-labelledby="tab-info" aria-hidden="true" style="display:none">
+      <p><strong>Make Money Co</strong> — click to earn, buy upgrades, rebirth for growth, play Slots, Mines, Goals. </p>
+      <p><strong>Rebirth:</strong> The cost increases by <strong>×100</strong> each time you rebirth. Reach the cost to rebirth and permanently buff your CPC.</p>
     </section>
 
-    <!-- ACCOUNT SECTION -->
-    <section id="account-section" role="tabpanel" aria-labelledby="tab-account" aria-hidden="true" style="display:none;">
-      <div class="account-panel" role="region" aria-label="Account panel">
-
+    <!-- ACCOUNT -->
+    <section id="account-section" role="tabpanel" aria-labelledby="tab-account" aria-hidden="true" style="display:none">
+      <div class="card">
         <div class="acct-tabs">
-          <button id="acct-tab-login" class="acct-tab active" type="button">Login</button>
-          <button id="acct-tab-register" class="acct-tab" type="button">Register</button>
+          <button id="acct-tab-login" class="tab active" type="button">Login</button>
+          <button id="acct-tab-register" class="tab" type="button">Register</button>
         </div>
 
-        <!-- LOGIN FORM -->
-        <form id="acct-login-form" class="acct-form" onsubmit="return false;">
-          <input id="login-username" class="account-input" placeholder="Username" aria-label="login username" autocomplete="username" />
-          <input id="login-password" type="password" class="account-input" placeholder="Password" aria-label="login password" autocomplete="current-password" />
-          <div class="account-row">
-            <button id="acct-login-btn" class="account-btn" type="button">Login</button>
-          </div>
+        <!-- Login -->
+        <form id="login-form" class="form" onsubmit="return false;">
+          <input id="login-email" class="input" placeholder="Email" autocomplete="email" />
+          <input id="login-pass" type="password" class="input" placeholder="Password" autocomplete="current-password" />
+          <button id="login-btn" class="btn" type="button">Login</button>
         </form>
 
-        <!-- REGISTER FORM -->
-        <form id="acct-register-form" class="acct-form hidden" onsubmit="return false;">
-          <input id="reg-username" class="account-input" placeholder="Choose a username" aria-label="register username" autocomplete="username" />
-          <input id="reg-password" type="password" class="account-input" placeholder="Choose a password" aria-label="register password" autocomplete="new-password" />
-          <input id="reg-password-confirm" type="password" class="account-input" placeholder="Confirm password" aria-label="confirm password" autocomplete="new-password" />
-          <div class="account-row">
-            <button id="acct-register-btn" class="account-btn" type="button">Create Account</button>
-          </div>
+        <!-- Register -->
+        <form id="reg-form" class="form" onsubmit="return false;" style="display:none">
+          <input id="reg-username" class="input" placeholder="Username (display)" />
+          <input id="reg-email" class="input" placeholder="Email" autocomplete="email" />
+          <input id="reg-pass" type="password" class="input" placeholder="Password" autocomplete="new-password" />
+          <input id="reg-pass2" type="password" class="input" placeholder="Confirm password" autocomplete="new-password" />
+          <button id="reg-btn" class="btn" type="button">Create Account</button>
         </form>
 
-        <div class="account-row">
-          <button id="acct-manual-save" class="account-btn" style="flex:1;">Manual Save</button>
+        <div class="row">
+          <button id="manual-save" class="btn" style="flex:1">Save Now</button>
+          <button id="logout-btn" class="btn text" style="flex:1">Logout</button>
         </div>
-
-        <div class="account-row account-small" id="acct-status">Not logged in</div>
-        <div class="account-row account-small">Auto-save: every 60s (saved to localStorage)</div>
+        <div id="acct-status" class="muted">Not logged in</div>
+        <div class="muted">Auto-save every 60s (cloud)</div>
       </div>
     </section>
+
+    <!-- PANELS -->
+    <!-- UPDATED: Fullscreen Leaderboard -->
+    <div class="panel panel-full" id="panel-leaderboard" aria-hidden="true">
+      <div class="card">
+        <div class="lb-header">
+          <div class="lb-title">
+            <h3 style="margin:0">Leaderboard</h3>
+            <div class="lb-sub">Top 5 — Money (left) & Rebirths (right)</div>
+          </div>
+          <div class="lb-actions">
+            <button class="btn text" id="lb-refresh">Refresh</button>
+            <button class="btn text" data-close="panel-leaderboard">Close</button>
+          </div>
+        </div>
+
+        <div class="lb-grid">
+          <div class="lb-col">
+            <h4>Top Money</h4>
+            <div id="lb-money" class="lb-list"></div>
+          </div>
+          <div class="lb-col">
+            <h4>Top Rebirths</h4>
+            <div id="lb-rebirths" class="lb-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin (unchanged size) -->
+    <div class="panel" id="panel-admin" aria-hidden="true">
+      <div class="card">
+        <h3>Admin</h3>
+        <div id="admin-locked">
+          <div class="row">
+            <input id="admin-pass" class="input" type="password" placeholder="Passcode" />
+            <button id="admin-login" class="btn">Login</button>
+          </div>
+          <div class="muted">Passcode required.</div>
+        </div>
+
+        <div id="admin-body" style="display:none">
+          <div class="row" style="justify-content:space-between">
+            <div class="muted">Logged in as Admin</div>
+            <button id="admin-logout" class="btn text">Logout</button>
+          </div>
+
+          <div>
+            <strong style="color:var(--accent)">Accounts</strong>
+            <div id="admin-accounts" class="card" style="max-height:240px; overflow:auto; gap:6px"></div>
+          </div>
+
+          <div class="row" style="margin-top:6px">
+            <button id="admin-reset-all" class="btn" style="background:var(--danger); color:#fff">Reset ALL Accounts</button>
+            <button id="admin-refresh" class="btn text">Refresh</button>
+          </div>
+
+          <div style="margin-top:8px">
+            <strong style="color:var(--accent)">Selected Account</strong>
+            <div class="row">
+              <input id="adm-uid" class="input" placeholder="uid" disabled />
+              <input id="adm-username" class="input" placeholder="username" disabled />
+            </div>
+            <div class="row">
+              <input id="adm-balance" class="input" type="number" step="0.01" placeholder="Balance" />
+            </div>
+            <div class="row">
+              <button id="adm-save" class="btn">Save Changes</button>
+              <button id="adm-give1k" class="btn">Give +1,000</button>
+              <button id="adm-wipe" class="btn" style="background:var(--danger); color:#fff">Wipe User</button>
+            </div>
+          </div>
+
+          <div class="row" style="justify-content:flex-end">
+            <button class="btn text" data-close="panel-admin">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-money" aria-hidden="true">
+      <div class="card">
+        <h3>Send Money</h3>
+        <div class="row">
+          <input id="money-from" class="input" disabled />
+          <select id="money-to" class="input"></select>
+        </div>
+        <div class="row">
+          <input id="money-amount" class="input" type="number" step="0.01" min="0.01" placeholder="Amount" />
+        </div>
+        <div class="row" style="justify-content:flex-end">
+          <button id="money-send" class="btn">Send</button>
+          <button class="btn text" data-close="panel-money">Close</button>
+        </div>
+        <div class="muted">Transfers are processed in the cloud using transactions.</div>
+      </div>
+    </div>
 
     <div id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
-    <div id="footer">Made By Koby Webster</div>
+    <div id="footer">Made by Koby Webster</div>
   </div>
+  
+  <!-- Firebase (CDN compat builds) -->
+<script src="firebase/firebase-app-compat.js"></script>
+<script src="firebase/firebase-auth-compat.js"></script>
+<script src="firebase/firebase-firestore-compat.js"></script>
 
   <script>
-    // ===========================
-    // Full game code (unchanged logic) + improved account UI handlers
-    // ===========================
+  // ====== Firebase init ======
+  // IMPORTANT: Use your own Firebase project config or keep this one if it’s your project.
+  const firebaseConfig = {
+    apiKey: "AIzaSyDDNsDUP7lbZk8wLIMf8Y70foL-WUkzxBg",
+    authDomain: "makemoneyco-ae041.firebaseapp.com",
+    projectId: "makemoneyco-ae041",
+    storageBucket: "makemoneyco-ae041.firebasestorage.app",
+    messagingSenderId: "934218263522",
+    appId: "1:934218263522:web:1da69f829880c91cec27bb"
+  };
 
-    // === Shared bank and utility ===
-    let balance = 0;
-    const balanceEl = document.getElementById('balance');
-    function updateBalance(amountChange=0) {
-      balance += amountChange;
-      if(balance < 0) balance = 0;
-      balanceEl.textContent = balance.toFixed(2);
-      updateUpgradeButtons();
-      updateRebirthButton();
-      updateSlotBet();
-      updateMinesBet();
+  // Guard to ensure Firebase is initialized exactly once and the cloud is reachable
+  let cloudReady = false;
+  let app, auth, db;
+
+  async function initFirebase() {
+    if (!firebase.apps.length) {
+      app = firebase.initializeApp(firebaseConfig);
+    } else {
+      app = firebase.app();
     }
-
-    // === TOAST ===
-    const toast = document.getElementById('toast');
-    let toastTimeout;
-    function showToast(msg, duration=2000) {
-      clearTimeout(toastTimeout);
-      toast.textContent = msg;
-      toast.classList.add('show');
-      toastTimeout = setTimeout(() => toast.classList.remove('show'), duration);
+    auth = firebase.auth();
+    db = firebase.firestore();
+    // Try to enable network explicitly (in case it was disabled by the SDK caching layer)
+    try { await db.enableNetwork(); } catch(e) {}
+    // Quick ping that does not require auth: a server-backed time fetch
+    try {
+      // Using a deterministic non-sensitive read; if rules lock this down, the catch will mark cloudReady=false
+      await db.collection('_public').limit(1).get({ source: 'server' });
+      cloudReady = true;
+    } catch (e) {
+      // Some projects don't have this collection or restrict reads; fall back to a lightweight write-on-auth instead.
+      cloudReady = false;
     }
+  }
 
-    // === TABS ===
-    const tabs = document.querySelectorAll('nav.tabs button');
-    const sections = document.querySelectorAll('section[role="tabpanel"]');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-          const ctrl = t.getAttribute('aria-controls');
-          if(ctrl) {
-            const el = document.getElementById(ctrl);
-            if(el) {
-              el.setAttribute('aria-hidden', 'true');
-              el.classList.remove('active');
-              el.style.display = 'none';
-            }
-          }
-        });
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-        const target = tab.getAttribute('aria-controls');
-        if(target) {
-          const sec = document.getElementById(target);
-          if(sec) {
-            sec.setAttribute('aria-hidden', 'false');
-            sec.classList.add('active');
-            sec.style.display = '';
-          }
+  // ====== Shortcuts ======
+  const qs = (sel, el=document)=>el.querySelector(sel);
+  const qsa = (sel, el=document)=>Array.from(el.querySelectorAll(sel));
+  const clamp = (n, min, max)=> Math.max(min, Math.min(max, n));
+  const fmt = n => Number(n||0).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+  const numberFmt0 = n => Number(n||0).toLocaleString(undefined, {maximumFractionDigits:0});
+
+  // ====== Elements ======
+  const container = qs('.container');
+  // menu
+  const menuBtn = qs('#menu-btn');
+  const menuDropdown = qs('#menu-dropdown');
+  const lbBtn = qs('#menu-leaderboard');
+  const adminBtn = qs('#menu-admin');
+  const moneyBtn = qs('#menu-money');
+
+  // balance + hud
+  const balanceEl = qs('#balance');
+  const coinsEl = qs('#coins');
+  const cpcEl = qs('#cpc');
+  const cpsEl = qs('#cps-indicator'); // kept for logic only (hidden)
+  const rebirthBtn = qs('#rebirth-btn');
+  const rebirthCostEl = qs('#rebirth-cost');
+  const toastEl = qs('#toast');
+
+  // tabs
+  const tabClicker = qs('#tab-clicker');
+  const tabUpgrades = qs('#tab-upgrades');
+  const tabGambling = qs('#tab-gambling');
+  const tabInfo = qs('#tab-info');
+  const tabAccount = qs('#tab-account');
+
+  const clickerSection = qs('#clicker-section');
+  const upgradesSection = qs('#upgrades-section');
+  const gamblingSection = qs('#gambling-section');
+  const infoSection = qs('#info-section');
+  const accountSection = qs('#account-section');
+
+  // clicker
+  const bag = qs('#money-bag');
+  const upgradesWrap = qs('#upgrades');
+
+  // slot
+  const slotBet = qs('#slot-bet');
+  const slotSpin = qs('#slot-spin');
+  const slotReels = qs('#slot-reels');
+  const slotMsg = qs('#slot-msg');
+
+  // mines
+  const minesGrid = qs('#mines-grid');
+  const minesBet = qs('#mines-bet');
+  const minesBombs = qs('#mines-bombs');
+  const minesStart = qs('#mines-start');
+  const minesCash = qs('#mines-cashout');
+  const minesGemsEl = qs('#mines-gems');
+  const minesMultEl = qs('#mines-mult');
+  const minesPotEl = qs('#mines-pot');
+
+  // goals
+  const goalsBet = qs('#goals-bet');
+  const goalsSize = qs('#goals-size');
+  const goalsStart = qs('#goals-start');
+  const goalsCash = qs('#goals-cashout');
+  const goalsGrid = qs('#goals-grid');
+  const goalsMultRow = qs('#goals-mult-row');
+  const goalsColEl = qs('#goals-col');
+  const goalsMultEl = qs('#goals-mult');
+  const goalsPotEl = qs('#goals-pot');
+
+  // panels
+  const panelLB = qs('#panel-leaderboard');
+  const panelAdmin = qs('#panel-admin');
+  const panelMoney = qs('#panel-money');
+
+  // leaderboard panel els
+  const lbMoney = qs('#lb-money');
+  const lbRebirths = qs('#lb-rebirths'); // NEW
+  const lbRefresh = qs('#lb-refresh');
+
+  // admin els
+  const adminLocked = qs('#admin-locked');
+  const adminBody = qs('#admin-body');
+  const adminPass = qs('#admin-pass');
+  const adminLogin = qs('#admin-login');
+  const adminLogout = qs('#admin-logout');
+  const adminAccounts = qs('#admin-accounts');
+  const adminRefresh = qs('#admin-refresh');
+  const adminResetAll = qs('#admin-reset-all');
+  const admUid = qs('#adm-uid');
+  const admUsername = qs('#adm-username');
+  const admBalance = qs('#adm-balance');
+  const admSave = qs('#adm-save');
+  const admGive1k = qs('#adm-give1k');
+  const admWipe = qs('#adm-wipe');
+
+  // money transfer
+  const moneyFrom = qs('#money-from');
+  const moneyTo = qs('#money-to');
+  const moneyAmt = qs('#money-amount');
+  const moneySend = qs('#money-send');
+
+  // account
+  const acctTabLogin = qs('#acct-tab-login');
+  const acctTabRegister = qs('#acct-tab-register');
+  const loginForm = qs('#login-form');
+  const loginEmail = qs('#login-email');
+  const loginPass = qs('#login-pass');
+  const loginBtn = qs('#login-btn');
+  const regForm = qs('#reg-form');
+  const regUsername = qs('#reg-username');
+  const regEmail = qs('#reg-email');
+  const regPass = qs('#reg-pass');
+  const regPass2 = qs('#reg-pass2');
+  const regBtn = qs('#reg-btn');
+  const manualSaveBtn = qs('#manual-save');
+  const logoutBtn = qs('#logout-btn');
+  const acctStatus = qs('#acct-status');
+
+  // ====== Menu ======
+  function toggleMenu(force){
+    const isOpen = menuDropdown.classList.contains('show');
+    const next = typeof force==='boolean' ? force : !isOpen;
+    menuDropdown.classList.toggle('show', next);
+    menuBtn.setAttribute('aria-expanded', String(next));
+  }
+  menuBtn.addEventListener('click', e=>{
+    e.stopPropagation();
+    toggleMenu();
+  });
+  document.addEventListener('click', e=>{
+    if(!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)){
+      toggleMenu(false);
+    }
+  });
+
+  // Panels openers
+  lbBtn.addEventListener('click', ()=>{ openPanel(panelLB); renderLeaderboard(); });
+  adminBtn.addEventListener('click', ()=>{ openPanel(panelAdmin); });
+  moneyBtn.addEventListener('click', ()=>{ populateMoney(); openPanel(panelMoney); });
+
+  // ====== Panels ======
+  function openPanel(panel){ panel.classList.add('show'); panel.setAttribute('aria-hidden','false'); toggleMenu(false); }
+  function closePanel(panel){ panel.classList.remove('show'); panel.setAttribute('aria-hidden','true'); }
+  qsa('[data-close]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const id = b.getAttribute('data-close');
+      const el = qs('#'+id);
+      if(el) closePanel(el);
+    });
+  });
+  [panelLB,panelAdmin,panelMoney].forEach(p=>{
+    p.addEventListener('click', e=>{ if(e.target === p) closePanel(p); });
+  });
+
+  // ====== Toast ======
+  let toastTimer=null;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> toastEl.classList.remove('show'), 2200);
+  }
+
+  // ====== Tabs ======
+  function showTab(tab){
+    [tabClicker, tabUpgrades, tabGambling, tabInfo, tabAccount].forEach(b=>{
+      const active = (b===tab);
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-selected', active ? 'true':'false');
+    });
+    [clickerSection, upgradesSection, gamblingSection, infoSection, accountSection].forEach(sec=>{
+      const id = sec.id;
+      const active = (tab.getAttribute('aria-controls')===id);
+      sec.classList.toggle('active', active);
+      sec.style.display = active ? 'block' : 'none';
+      sec.setAttribute('aria-hidden', active ? 'false':'true');
+    });
+  }
+  tabClicker.addEventListener('click', ()=>showTab(tabClicker));
+  tabUpgrades.addEventListener('click', ()=>showTab(tabUpgrades));
+  tabGambling.addEventListener('click', ()=>showTab(tabGambling));
+  tabInfo.addEventListener('click', ()=>showTab(tabInfo));
+  tabAccount.addEventListener('click', ()=>showTab(tabAccount));
+
+  // ====== Game State (local + cloud) ======
+  let currentUser = null;   // full user object from Firestore
+  let currentUID = null;    // auth uid
+  let displayName = '';     // username field for UI
+
+  // Local runtime numbers (mirrors cloud when logged in)
+  let balance = 0;
+  let coins = 0;
+  let cpc = 0.05;
+  let rebirths = 0;
+  let rebirthCost = 100_000_000_000;
+  let upgrades = {}; // key->level
+  let stats = {
+    slots_spins:0, slots_won:0, slots_profit:0,
+    mines_plays:0, mines_profit:0,
+    goals_profit:0
+  };
+
+  // ====== Autoclicker Limit: max 10 clicks/sec (hidden UI) ======
+  let clickWindowStart = Date.now();
+  let clickCountThisSec = 0;
+  function canClick(){
+    const now = Date.now();
+    if(now - clickWindowStart >= 1000){
+      clickWindowStart = now;
+      clickCountThisSec = 0;
+    }
+    if(clickCountThisSec >= 10) return false;
+    clickCountThisSec++;
+    // cpsEl exists but is visually hidden; we still update for internal debugging
+    if (cpsEl) cpsEl.textContent = `${clickCountThisSec}/10 cps`;
+    return true;
+  }
+  setInterval(()=>{
+    const now = Date.now();
+    if(now - clickWindowStart >= 1000){
+      clickWindowStart = now;
+      clickCountThisSec = 0;
+      if (cpsEl) cpsEl.textContent = `0/10 cps`;
+    }
+  }, 150);
+
+  // ====== Upgrades ======
+  const upgradesCatalog = [
+    {key:'Small Tip',        base:250,          inc:0.05},
+    {key:'Wallet Upgrade',   base:50_000,       inc:0.10},
+    {key:'Coin Press',       base:100_000,      inc:0.20},
+    {key:'Gold Miner',       base:150_000,      inc:0.50},
+    {key:'Bank Vault',       base:250_000,      inc:1},
+    {key:'Fortune Wheel',    base:500_000,      inc:2},
+    {key:'Money Factory',    base:1_000_000,    inc:3},
+    {key:'Bitcoin Miner',    base:8_000_000,    inc:5},
+    {key:'Diamond Mine',     base:50_000_000,   inc:10},
+    {key:'Angel Investor',   base:500_000_000,  inc:20},
+    {key:'Quantum Printer',  base:5_000_000_000,inc:40},
+  ];
+  function upgradeCost(key, level){
+    const u = upgradesCatalog.find(x=>x.key===key);
+    if(!u) return Infinity;
+    return Math.floor(u.base * Math.pow(1.7, level));
+  }
+
+  // ====== UI helpers ======
+  function refreshHUD(){
+    balanceEl.textContent = fmt(balance);
+    coinsEl.textContent = fmt(coins);
+    cpcEl.textContent = cpc.toFixed(2);
+    rebirthCostEl.textContent = numberFmt0(rebirthCost);
+    updateRebirthButton();
+    updateSlotControls();
+    updateMinesNumbers();
+    updateGoalsNumbers();
+    buildUpgradesUI();
+  }
+
+  function updateRebirthButton(){
+    const need = rebirthCost;
+    const can = balance >= need;
+    rebirthBtn.disabled = !can;
+    rebirthBtn.setAttribute('aria-disabled', can ? 'false':'true');
+  }
+
+  function buildUpgradesUI(){
+    upgradesWrap.innerHTML = '';
+    upgradesCatalog.forEach(row=>{
+      const level = (upgrades?.[row.key] || 0);
+      const cost = upgradeCost(row.key, level);
+      const div = document.createElement('div');
+      div.className = 'upgrade';
+      if(cost > balance) div.classList.add('disabled');
+      div.innerHTML = `
+        <div class="name">${row.key}</div>
+        <div class="info">${level>0 ? 'Level '+level : '—'}</div>
+        <div class="cost">$${numberFmt0(cost)}</div>
+      `;
+      div.addEventListener('click', ()=>tryBuyUpgrade(row.key));
+      div.addEventListener('keydown', e=>{
+        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); tryBuyUpgrade(row.key); }
+      });
+      div.setAttribute('tabindex', '0');
+      upgradesWrap.appendChild(div);
+    });
+  }
+
+  async function tryBuyUpgrade(key){
+    const level = (upgrades[key] || 0);
+    const cost = upgradeCost(key, level);
+    if(balance < cost){ toast('Not enough balance'); return; }
+    balance -= cost;
+    upgrades[key] = level + 1;
+    const inc = (upgradesCatalog.find(u=>u.key===key)?.inc || 0);
+    cpc = +(cpc + inc).toFixed(2);
+    await persist();
+    refreshHUD();
+    toast(`${key} upgraded to level ${level+1}`);
+  }
+
+  // ====== Clicker ======
+  bag.addEventListener('click', async ()=>{
+    if(!canClick()) return;
+    balance = +(balance + cpc).toFixed(2);
+    coins = +(coins + cpc).toFixed(2);
+    await persistShallow();
+    refreshHUD();
+  });
+  bag.addEventListener('keydown', e=>{
+    if(e.key==='Enter' || e.key===' '){ e.preventDefault(); bag.click(); }
+  });
+
+  rebirthBtn.addEventListener('click', async ()=>{
+    const need = rebirthCost;
+    if(balance < need){ toast('Not enough to rebirth'); return; }
+    balance = 0;
+    coins = 0;
+    cpc = +(cpc * 2).toFixed(2);
+    rebirths += 1;
+    rebirthCost = Math.floor(rebirthCost * 100);
+    upgrades = {};
+    await persist();
+    refreshHUD();
+    toast('Rebirth successful! CPC doubled, cost increased ×100.');
+  });
+
+  // ====== Slots ======
+  const slotSymbols = ['🍒','🍋','🍉','⭐','💎','7️⃣'];
+  const slotWeights = [30,25,20,15,8,2];
+
+  function slotWeighted(){
+    const sum = slotWeights.reduce((a,b)=>a+b,0);
+    let r = Math.random()*sum;
+    for(let i=0;i<slotSymbols.length;i++){
+      if(r < slotWeights[i]) return slotSymbols[i];
+      r -= slotWeights[i];
+    }
+    return slotSymbols[0];
+  }
+
+  function updateSlotControls(){
+    let v = Number(slotBet.value);
+    if(!Number.isFinite(v) || v<50) v=50;
+    if(v>balance) v = balance;
+    slotBet.value = v;
+    slotSpin.disabled = v<=0 || v>balance;
+  }
+  slotBet.addEventListener('input', updateSlotControls);
+
+  slotSpin.addEventListener('click', async ()=>{
+    let bet = Number(slotBet.value);
+    if(bet>balance){ toast('Not enough balance'); return; }
+    balance -= bet; updateSlotControls(); refreshHUD();
+    slotMsg.textContent = '';
+    slotSpin.disabled = true;
+
+    // spin animation
+    let steps=28, i=0;
+    const timer = setInterval(()=>{
+      slotReels.textContent = `${slotWeighted()} ${slotWeighted()} ${slotWeighted()}`;
+      i++;
+      if(i>=steps){
+        clearInterval(timer);
+        const [a,b,c] = slotReels.textContent.split(' ');
+        const pay = slotPayout([a,b,c], bet);
+        if(pay>0){
+          balance += pay;
+          stats.slots_won++;
+          stats.slots_profit += (pay-bet);
+          slotMsg.textContent = `You won $${fmt(pay)} 🎉`;
+        }else{
+          stats.slots_profit -= bet;
+          slotMsg.textContent = `No win, try again.`;
         }
+        stats.slots_spins++;
+        persistShallow();
+        refreshHUD();
+        slotSpin.disabled = false;
+      }
+    }, 50);
+  });
+
+  function slotPayout(res, bet){
+    const [a,b,c] = res;
+    if(a===b && b===c){
+      switch(a){
+        case '7️⃣': return bet*100;
+        case '💎': return bet*50;
+        case '⭐':  return bet*25;
+        case '🍉': return bet*10;
+        case '🍋': return bet*5;
+        case '🍒': return bet*3;
+      }
+    }
+    if(a===b || b===c || a===c) return bet*0.5;
+    return 0;
+  }
+
+  // ====== Mines ======
+  const MINES_SIZE = 25; // 5x5
+  let minesState = {
+    playing:false,
+    bet:10,
+    bombs:1,
+    bombSet:new Set(),
+    gems:0,
+    multipliers:[],
+  };
+  const minesMultTable = {
+    1: [1.1,1.2,1.3,1.5,1.7,1.9,2.1,2.3,2.6,3,3.3,3.7,4.2,4.8,5.5,6.3,7.2,8.2,9.3,10.5],
+    2: [1.3,1.5,1.7,1.9,2.2,2.5,3,3.5,4,4.5,5,5.7,6.5,7.5,8.5,9.7,11,12.5,14,16],
+    3: [1.5,2,2.3,2.8,3.5,4.5,7,10,12,14,16,18,20,23,26,29,33,37,42,48],
+  };
+
+  function resetMinesGrid(){
+    minesGrid.innerHTML = '';
+    for(let i=0;i<MINES_SIZE;i++){
+      const d = document.createElement('div');
+      d.className = 'mines-cell';
+      d.dataset.i = String(i);
+      d.setAttribute('role','button');
+      d.setAttribute('tabindex','0');
+      d.addEventListener('click', ()=>revealMine(i));
+      d.addEventListener('keydown', e=>{
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); revealMine(i); }
       });
-    });
-
-    // === CLICKER SECTION ===
-    let coins = 0;
-    let coinsPerClick = 0.05;
-    const coinsEl = document.getElementById('coins');
-    const cpcEl = document.getElementById('cpc');
-    const moneyBag = document.getElementById('money-bag');
-    const upgradesContainer = document.getElementById('upgrades');
-    const rebirthBtn = document.getElementById('rebirth-btn');
-
-    // Upgrades data
-    const upgradesData = [
-      { name: 'Small Tip', baseCost: 1500, cost: 1500, cpcIncrease: 0.05, level: 0 },
-      { name: 'Wallet Upgrade', baseCost: 50000, cost: 50000, cpcIncrease: 0.10, level: 0 },
-      { name: 'Coin Press', baseCost: 100000, cost: 100000, cpcIncrease: 0.20, level: 0 },
-      { name: 'Gold Miner', baseCost: 150000, cost: 150000, cpcIncrease: 0.50, level: 0 },
-      { name: 'Bank Vault', baseCost: 250000, cost: 250000, cpcIncrease: 1, level: 0 },
-      { name: 'Fortune Wheel', baseCost: 500000, cost: 500000, cpcIncrease: 2, level: 0 },
-      { name: 'Money Factory', baseCost: 1000000, cost: 1000000, cpcIncrease: 3, level: 0 },
-      { name: 'Bitcoin Miner', baseCost: 8000000, cost: 8000000, cpcIncrease: 5, level: 0 },
-      { name: 'Diamond Mine', baseCost: 50000000, cost: 50000000, cpcIncrease: 10, level: 0 },
-      { name: 'Rebirth Lab', baseCost: 100000000000, cost: 100000000000, cpcIncrease: 0, level: 0, special:true }
-    ];
-
-    // Build upgrade buttons
-    function buildUpgrades() {
-      upgradesContainer.innerHTML = '';
-      upgradesData.forEach((upg, i) => {
-        const div = document.createElement('div');
-        div.className = 'upgrade';
-        div.dataset.idx = i;
-        div.setAttribute('tabindex', '0');
-        if(upg.cost > balance) div.classList.add('disabled');
-
-        div.innerHTML = `
-          <div class="upgrade-name">${upg.name}${upg.special ? ' (Rebirth)' : ''}</div>
-          <div class="upgrade-info">${upg.level > 0 ? 'Level ' + upg.level : ''}</div>
-          <div class="upgrade-cost">$${upg.cost.toLocaleString()}</div>
-        `;
-
-        div.addEventListener('click', () => buyUpgrade(i));
-        div.addEventListener('keydown', e => {
-          if(e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            buyUpgrade(i);
-          }
-        });
-
-        upgradesContainer.appendChild(div);
-      });
+      minesGrid.appendChild(d);
     }
+  }
+  resetMinesGrid();
 
-    function updateUpgradeButtons() {
-      const upgradeDivs = upgradesContainer.querySelectorAll('.upgrade');
-      upgradeDivs.forEach(div => {
-        const i = +div.dataset.idx;
-        const upg = upgradesData[i];
-        if(upg.cost > balance) div.classList.add('disabled');
-        else div.classList.remove('disabled');
+  function updateMinesNumbers(){
+    const m = minesState;
+    const curMult = m.multipliers[m.gems] || 1;
+    minesGemsEl.textContent = m.gems;
+    minesMultEl.textContent = `${curMult.toFixed(2)}x`;
+    const pot = m.playing ? (m.bet * curMult) : 0;
+    minesPotEl.textContent = fmt(pot);
+    minesStart.disabled = m.playing;
+    minesCash.disabled = !m.playing || m.gems===0;
+  }
 
-        // Update level & cost text:
-        div.querySelector('.upgrade-info').textContent = upg.level > 0 ? 'Level ' + upg.level : '';
-        div.querySelector('.upgrade-cost').textContent = `$${upg.cost.toLocaleString()}`;
-      });
-    }
-
-    function buyUpgrade(i) {
-      const upg = upgradesData[i];
-      if(balance < upg.cost) {
-        showToast("Not enough balance for " + upg.name);
-        return;
-      }
-      if(upg.special) {
-        // Rebirth lab can only be bought once, handled separately
-        showToast("Buy the Rebirth button below to rebirth!");
-        return;
-      }
-      balance -= upg.cost;
-      updateBalance(0);
-      coinsPerClick += upg.cpcIncrease;
-      upg.level++;
-      upg.cost = Math.floor(upg.baseCost * Math.pow(1.7, upg.level));
-      showToast(`${upg.name} upgraded to level ${upg.level}`);
-      updateCPC();
-      buildUpgrades();
-    }
-
-    function updateCPC() {
-      cpcEl.textContent = coinsPerClick.toFixed(2);
-    }
-
-    moneyBag.addEventListener('click', () => {
-      // Add coinsPerClick directly to balance now
-      updateBalance(coinsPerClick);
-      coins += coinsPerClick; // keep total coins for display
-      coinsEl.textContent = coins.toFixed(2);
-    });
-    moneyBag.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        moneyBag.click();
-      }
-    });
-
-    // Rebirth logic
-    rebirthBtn.addEventListener('click', () => {
-      if(balance < 1_000_000_000) {
-        showToast("Need 1,000,000,000 coins to rebirth");
-        return;
-      }
-      balance = 0;
-      coins = 0;
-      coinsPerClick *= 2;
-      upgradesData.forEach(upg => {
-        upg.level = 0;
-        upg.cost = upg.baseCost;
-      });
-      updateBalance(0);
-      coinsEl.textContent = coins.toFixed(2);
-      updateCPC();
-      buildUpgrades();
-      showToast("Rebirth successful! CPC doubled.");
-      updateRebirthButton();
-    });
-
-    function updateRebirthButton() {
-      if(balance >= 1_000_000_000) {
-        rebirthBtn.disabled = false;
-        rebirthBtn.setAttribute('aria-disabled', 'false');
-      } else {
-        rebirthBtn.disabled = true;
-        rebirthBtn.setAttribute('aria-disabled', 'true');
-      }
-    }
-
-    // === SLOT MACHINE ===
-    const slotBetInput = document.getElementById('slot-bet');
-    const slotSpinBtn = document.getElementById('slot-spin-btn');
-    const slotReels = document.getElementById('slot-reels');
-    const slotReward = document.getElementById('slot-reward');
-
-    const slotSymbols = ['🍒', '🍋', '🍉', '⭐', '💎', '7️⃣'];
-    const slotSymbolWeights = [30, 25, 20, 15, 8, 2]; // relative freq weights
-
-    function weightedRandomSymbol() {
-      const totalWeight = slotSymbolWeights.reduce((a,b) => a+b, 0);
-      let rand = Math.random() * totalWeight;
-      for(let i=0; i<slotSymbols.length; i++) {
-        if(rand < slotSymbolWeights[i]) return slotSymbols[i];
-        rand -= slotSymbolWeights[i];
-      }
-      return slotSymbols[0];
-    }
-
-    function updateSlotBet() {
-      let val = Number(slotBetInput.value);
-      if(isNaN(val) || val < 50) val = 50;
-      if(val > balance) val = balance;
-      slotBetInput.value = val;
-      slotSpinBtn.disabled = val > balance;
-    }
-    slotBetInput.addEventListener('input', updateSlotBet);
-
-    slotSpinBtn.addEventListener('click', () => {
-      let bet = Number(slotBetInput.value);
-      if(bet > balance) {
-        showToast("Not enough balance");
-        return;
-      }
-      balance -= bet;
-      updateBalance(0);
-      slotSpinBtn.disabled = true;
-      slotReward.textContent = '';
-      slotReels.textContent = '🍆 🍆 🍆';
-
-      // Animate reels cycling for 1.5s
-      let iterations = 30;
-      let i = 0;
-      const spinInterval = setInterval(() => {
-        slotReels.textContent =
-          `${weightedRandomSymbol()} ${weightedRandomSymbol()} ${weightedRandomSymbol()}`;
-        i++;
-        if(i >= iterations) {
-          clearInterval(spinInterval);
-          const results = slotReels.textContent.split(' ');
-          const payout = calculateSlotPayout(results, bet);
-          if(payout > 0) {
-            balance += payout;
-            updateBalance(0);
-            slotReward.textContent = `You won $${payout.toFixed(2)}! 🎉`;
-          } else {
-            slotReward.textContent = "No win, try again!";
-          }
-          slotSpinBtn.disabled = false;
-        }
-      }, 50);
-    });
-
-    // Slot payout rules
-    function calculateSlotPayout(results, bet) {
-      const [a,b,c] = results;
-      if(a === b && b === c) {
-        switch(a) {
-          case '7️⃣': return bet * 100;
-          case '💎': return bet * 50;
-          case '⭐': return bet * 25;
-          case '🍉': return bet * 10;
-          case '🍋': return bet * 5;
-          case '🍒': return bet * 3;
-        }
-      }
-      if(a === b || b === c || a === c) return bet * 0.5;
-      return 0;
-    }
-
-    // === MINES GEM GAME ===
-    const minesBetInput = document.getElementById('mines-bet');
-    const minesModeSelect = document.getElementById('mines-mode');
-    const minesStartBtn = document.getElementById('mines-start-btn');
-    const minesCashoutBtn = document.getElementById('mines-cashout-btn');
-    const minesGrid = document.getElementById('mines-grid');
-    const minesGemsEl = document.getElementById('mines-gems');
-    const minesMultEl = document.getElementById('mines-multiplier');
-    const minesMoneyEl = document.getElementById('mines-money');
-
-    const MINES_SIZE = 25;
-    let minesCells = [];
-    let bombPositions = new Set();
-    let gemsFound = 0;
-    let minesBet = 10;
-    let minesGameOver = true;
-    let minesMultipliers = [];
-
-    const minesMultipliersMap = {
-      1: [1.1,1.2,1.3,1.5,1.7,1.9,2.1,2.3,2.6,3,3.3,3.7,4.2,4.8,5.5,6.3,7.2,8.2,9.3,10.5],
-      2: [1.3,1.5,1.7,1.9,2.2,2.5,3,3.5,4,4.5,5,5.7,6.5,7.5,8.5,9.7,11,12.5,14,16],
-      3: [1.5,2,2.3,2.8,3.5,4.5,7,10,12,14,16,18,20,23,26,29,33,37,42,48]
+  minesStart.addEventListener('click', async ()=>{
+    const bet = clamp(Number(minesBet.value)||0, 1, balance);
+    const bombs = Number(minesBombs.value)||1;
+    if(bet<=0){ toast('Enter a valid bet'); return; }
+    if(bet>balance){ toast('Not enough balance'); return; }
+    balance -= bet;
+    minesState = {
+      playing:true, bet, bombs, gems:0,
+      bombSet: new Set(),
+      multipliers: minesMultTable[bombs].slice(0, 20)
     };
+    while(minesState.bombSet.size < bombs){
+      minesState.bombSet.add(Math.floor(Math.random()*MINES_SIZE));
+    }
+    qsa('.mines-cell', minesGrid).forEach(c=>{
+      c.className='mines-cell';
+      c.textContent='';
+      c.style.pointerEvents='';
+    });
+    await persistShallow();
+    updateMinesNumbers();
+    refreshHUD();
+  });
 
-    function resetMinesGrid() {
-      minesGrid.innerHTML = '';
-      minesCells = [];
-      for(let i=0; i<MINES_SIZE; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'mines-cell';
-        cell.dataset.idx = i;
-        cell.setAttribute('role', 'button');
-        cell.setAttribute('tabindex', '0');
-        cell.addEventListener('click', () => revealMinesCell(i));
-        cell.addEventListener('keydown', e => {
-          if(e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            revealMinesCell(i);
+  function endMines(loss=false){
+    if(!minesState.playing) return;
+    if(loss){
+      qsa('.mines-cell', minesGrid).forEach(c=>{
+        const idx = Number(c.dataset.i);
+        if(minesState.bombSet.has(idx)){
+          c.classList.add('revealed','bomb');
+          c.textContent = '💣';
+        }
+        c.style.pointerEvents='none';
+      });
+      stats.mines_profit -= minesState.bet;
+      toast('Boom! You lost the bet.');
+    }
+    minesState.playing = false;
+    persistShallow();
+    updateMinesNumbers();
+    refreshHUD();
+  }
+
+  function revealMine(i){
+    if(!minesState.playing) return;
+    const cell = qsa('.mines-cell', minesGrid)[i];
+    if(cell.classList.contains('revealed')) return;
+    if(minesState.bombSet.has(i)){
+      cell.classList.add('revealed','bomb');
+      cell.textContent='💣';
+      endMines(true);
+      return;
+    }
+    cell.classList.add('revealed','safe');
+    cell.textContent='💎';
+    minesState.gems++;
+    stats.mines_plays++;
+    updateMinesNumbers();
+    if(minesState.gems >= minesState.multipliers.length){
+      minesCash.click(); // auto cashout at last step
+    }
+  }
+
+  minesCash.addEventListener('click', ()=>{
+    if(!minesState.playing) return;
+    if(minesState.gems<=0){ toast('Find at least one gem to cash out'); return; }
+    const mult = minesState.multipliers[minesState.gems] || 1;
+    const win = minesState.bet * mult;
+    balance += win;
+    stats.mines_profit += (win - minesState.bet);
+    toast(`Cashed out $${fmt(win)}!`);
+    endMines(false);
+  });
+
+  // ====== Goals ======
+  let goalsState = {
+    playing:false,
+    cols:7, rows:4,
+    bet:10,
+    col:0,
+    bombs:[],
+    mults:[],
+  };
+
+  function goalsMultForCols(cols){
+    if(cols===7)  return [1.20,1.45,1.80,2.30,3.00,4.20,6.00];
+    if(cols===10) return [1.15,1.30,1.55,1.90,2.35,2.90,3.70,4.80,6.20,8.20];
+    const arr=[]; for(let i=1;i<=cols;i++){ arr.push(1+ i*0.2); } return arr;
+  }
+
+  function buildGoalsGrid(){
+    goalsGrid.innerHTML='';
+    goalsGrid.style.gridTemplateColumns = `repeat(${goalsState.cols}, 48px)`;
+    goalsMultRow.innerHTML = '';
+    goalsMultRow.style.gridTemplateColumns = `repeat(${goalsState.cols}, 48px)`;
+    goalsState.mults.forEach((m, idx)=>{
+      const tag = document.createElement('div');
+      tag.className = 'goal-mult' + (idx===goalsState.col-1 ? ' active':'');
+      tag.textContent = `${m.toFixed(2)}x`;
+      goalsMultRow.appendChild(tag);
+    });
+    for(let r=0;r<goalsState.rows;r++){
+      for(let c=0;c<goalsState.cols;c++){
+        const d = document.createElement('div');
+        d.className='goal';
+        d.dataset.r=String(r);
+        d.dataset.c=String(c);
+        d.addEventListener('click', ()=>pickGoal(r,c));
+        d.addEventListener('keydown', e=>{
+          if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pickGoal(r,c); }
+        });
+        d.setAttribute('role','button');
+        d.setAttribute('tabindex','0');
+        goalsGrid.appendChild(d);
+      }
+    }
+  }
+
+  function paintGoalsMultRow(){
+    qsa('.goal-mult', goalsMultRow).forEach((el, idx)=>{
+      el.classList.toggle('active', idx===goalsState.col-1);
+    });
+  }
+
+  function updateGoalsNumbers(){
+    if(!goalsState.playing){
+      goalsColEl.textContent = '—';
+      goalsMultEl.textContent = '—';
+      goalsPotEl.textContent = fmt(0);
+      goalsCash.disabled = true;
+      return;
+    }
+    const cashIndex = Math.max(0, goalsState.col - 1);
+    const cashMult = goalsState.col===0 ? 1 : (goalsState.mults[cashIndex] || 1);
+    goalsColEl.textContent = String(goalsState.col)+'/'+goalsState.cols;
+    goalsMultEl.textContent = `${cashMult.toFixed(2)}x`;
+    goalsPotEl.textContent = fmt(goalsState.bet * cashMult);
+    goalsCash.disabled = (goalsState.col === 0);
+    paintGoalsMultRow();
+  }
+
+  function lockAllGoals(){
+    qsa('.goal', goalsGrid).forEach(g=>g.style.pointerEvents='none');
+  }
+  function unlockColumn(col){
+    qsa('.goal', goalsGrid).forEach(g=>{
+      const c = Number(g.dataset.c);
+      g.style.pointerEvents = (c===col) ? '' : 'none';
+    });
+  }
+
+  goalsStart.addEventListener('click', async ()=>{
+    const parts = goalsSize.value.split('x');
+    const cols = Number(parts[0])||7;
+    const rows = Number(parts[1])||4;
+    const bet = clamp(Number(goalsBet.value)||0, 1, balance);
+    if(bet<=0){ toast('Enter a valid bet'); return; }
+    if(bet>balance){ toast('Not enough balance'); return; }
+
+    balance -= bet;
+    goalsState = {
+      playing:true, cols, rows, bet,
+      col:0, bombs:[], mults: goalsMultForCols(cols).slice(0, cols)
+    };
+    for(let c=0;c<cols;c++){
+      goalsState.bombs[c] = Math.floor(Math.random()*rows);
+    }
+    buildGoalsGrid();
+    lockAllGoals();
+    unlockColumn(0);
+    await persistShallow();
+    updateGoalsNumbers();
+    refreshHUD();
+  });
+
+  function endGoals(loss=false){
+    if(!goalsState.playing) return;
+    qsa('.goal', goalsGrid).forEach(g=>{
+      const r = Number(g.dataset.r), c = Number(g.dataset.c);
+      if(goalsState.bombs[c]===r && c<=goalsState.col){
+        g.classList.add('revealed','bomb'); g.textContent='💥';
+      }
+      g.style.pointerEvents='none';
+    });
+    if(loss){
+      stats.goals_profit -= goalsState.bet;
+      toast('Oh no! You hit a bomb.');
+    }
+    goalsState.playing=false;
+    persistShallow();
+    updateGoalsNumbers();
+    refreshHUD();
+  }
+
+  function pickGoal(r,c){
+    if(!goalsState.playing) return;
+    if(c !== goalsState.col) return;
+    const cell = qsa('.goal', goalsGrid).find(d=>Number(d.dataset.r)===r && Number(d.dataset.c)===c);
+    if(!cell || cell.classList.contains('revealed')) return;
+
+    const bombR = goalsState.bombs[c];
+    if(bombR === r){
+      cell.classList.add('revealed','bomb');
+      cell.textContent='💥';
+      endGoals(true);
+      return;
+    }
+    cell.classList.add('revealed','safe');
+    cell.textContent='⭐';
+    goalsState.col++;
+
+    if(goalsState.col >= goalsState.cols){
+      goalsCash.click();
+      return;
+    }
+    unlockColumn(goalsState.col);
+    updateGoalsNumbers();
+  }
+
+  goalsCash.addEventListener('click', ()=>{
+    if(!goalsState.playing) return;
+    if(goalsState.col <= 0){ toast('Pick at least one safe cell to cash out'); return; }
+    const cashMult = goalsState.mults[goalsState.col-1] || 1;
+    const win = goalsState.bet * cashMult;
+    balance += win;
+    stats.goals_profit += (win - goalsState.bet);
+    toast(`Cashed out $${fmt(win)}!`);
+    endGoals(false);
+  });
+
+  // ====== Leaderboard ======
+  async function renderLeaderboard(){
+    lbMoney.innerHTML = '';
+    lbRebirths.innerHTML = '';
+    if(!cloudReady){
+      lbMoney.appendChild(makeDiv('lb-empty','Cloud not ready'));
+      lbRebirths.appendChild(makeDiv('lb-empty','Cloud not ready'));
+      return;
+    }
+
+    try{
+      // Top 5 by money
+      const moneySnap = await db.collection('users')
+        .orderBy('balance', 'desc')
+        .limit(5)
+        .get();
+
+      if(moneySnap.empty){
+        lbMoney.appendChild(makeDiv('lb-empty','No accounts yet.'));
+      }else{
+        let idx=0;
+        moneySnap.forEach(doc=>{
+          const u = doc.data();
+          const row = document.createElement('div');
+          row.className='lb-row';
+          row.innerHTML = `
+            <div class="lb-left"><b>${++idx}.</b> ${escapeHtml(u.username||'(no name)')}</div>
+            <div><b>$${fmt(u.balance||0)}</b></div>
+          `;
+          lbMoney.appendChild(row);
+        });
+      }
+
+      // Top 5 by rebirths
+      const rebSnap = await db.collection('users')
+        .orderBy('rebirths', 'desc')
+        .limit(5)
+        .get();
+
+      if(rebSnap.empty){
+        lbRebirths.appendChild(makeDiv('lb-empty','No accounts yet.'));
+      }else{
+        let idx=0;
+        rebSnap.forEach(doc=>{
+          const u = doc.data();
+          const row = document.createElement('div');
+          row.className='lb-row';
+          row.innerHTML = `
+            <div class="lb-left"><b>${++idx}.</b> ${escapeHtml(u.username||'(no name)')}</div>
+            <div><b>${Number(u.rebirths||0).toLocaleString()}</b></div>
+          `;
+          lbRebirths.appendChild(row);
+        });
+      }
+    }catch(e){
+      console.error(e);
+      lbMoney.appendChild(makeDiv('lb-empty','Failed to load leaderboard.'));
+      lbRebirths.appendChild(makeDiv('lb-empty','Failed to load leaderboard.'));
+    }
+  }
+  function makeDiv(cls, text){
+    const d=document.createElement('div'); d.className=cls; d.textContent=text; return d;
+  }
+  lbRefresh.addEventListener('click', renderLeaderboard);
+
+  // ====== Admin ======
+  const ADMIN_PASSCODE = '5113-1973-2010';
+
+  function openPanelById(id){
+    const el = qs('#'+id);
+    if(el) { el.classList.add('show'); el.setAttribute('aria-hidden', 'false'); }
+  }
+
+  adminLogin.addEventListener('click', ()=>{
+    if(!cloudReady){ toast('Cloud not ready'); return; }
+    if(adminPass.value.trim() === ADMIN_PASSCODE){
+      adminLocked.style.display='none';
+      adminBody.style.display='';
+      renderAdminAccounts();
+      admUid.value = '';
+      admUsername.value = '';
+      admBalance.value = '';
+    }else{
+      toast('Incorrect passcode');
+    }
+  });
+  adminLogout.addEventListener('click', ()=>{
+    adminBody.style.display='none';
+    adminLocked.style.display='';
+    adminPass.value='';
+  });
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+  }
+
+  async function renderAdminAccounts(){
+    if(!cloudReady){ adminAccounts.innerHTML='<div class="muted">Cloud not ready</div>'; return; }
+    adminAccounts.innerHTML = '';
+    try{
+      const snap = await db.collection('users').orderBy('username').limit(100).get();
+      if(snap.empty){
+        const d=document.createElement('div');
+        d.className='muted';
+        d.textContent='No users yet.';
+        adminAccounts.appendChild(d);
+        return;
+      }
+      snap.forEach(doc=>{
+        const u = doc.data();
+        const uid = doc.id;
+        const item = document.createElement('div');
+        item.style.display='flex';
+        item.style.alignItems='center';
+        item.style.justifyContent='space-between';
+        item.style.gap='8px';
+        item.style.background='var(--btn)';
+        item.style.border='1px solid rgba(255,255,255,.08)';
+        item.style.borderRadius='10px';
+        item.style.padding='8px';
+
+        const left = document.createElement('div');
+        left.innerHTML = `<b>${escapeHtml(u.username||'(no name)')}</b><div class="muted">$${fmt(u.balance||0)}</div>`;
+
+        const right = document.createElement('div');
+        right.style.display='flex';
+        right.style.gap='6px';
+
+        const eBtn = document.createElement('button');
+        eBtn.className='btn text';
+        eBtn.textContent='Edit';
+        eBtn.addEventListener('click', ()=>{
+          admUid.value = uid;
+          admUsername.value = u.username||'';
+          admBalance.value = (u.balance||0).toString();
+        });
+
+        const wBtn = document.createElement('button');
+        wBtn.className='btn';
+        wBtn.style.background='var(--danger)';
+        wBtn.style.color='#fff';
+        wBtn.textContent='Wipe';
+        wBtn.addEventListener('click', async ()=>{
+          if(!cloudReady){ toast('Cloud not ready'); return; }
+          if(confirm(`Wipe user "${u.username||uid}"? This cannot be undone.`)){
+            await db.collection('users').doc(uid).delete();
+            if(currentUID===uid){ await auth.signOut(); }
+            await renderAdminAccounts();
+            await renderLeaderboard();
+            await pullOrInitUser(); // refresh local state if needed
+            refreshHUD();
+            toast('User wiped');
           }
         });
-        minesGrid.appendChild(cell);
-        minesCells.push(cell);
-      }
+
+        right.appendChild(eBtn);
+        right.appendChild(wBtn);
+        item.appendChild(left);
+        item.appendChild(right);
+        adminAccounts.appendChild(item);
+      });
+    }catch(e){
+      console.error(e);
+      const d=document.createElement('div');
+      d.className='muted';
+      d.textContent='Failed to load users.';
+      adminAccounts.appendChild(d);
     }
+  }
 
-    function startMinesGame() {
-      let bet = Number(minesBetInput.value);
-      if(isNaN(bet) || bet < 1) {
-        showToast('Enter a valid bet (min 1)');
-        return;
-      }
-      if(bet > balance) {
-        showToast('Not enough balance');
-        return;
-      }
-      minesBet = bet;
-      balance -= bet;
-      updateBalance(0);
+  adminRefresh.addEventListener('click', renderAdminAccounts);
 
-      gemsFound = 0;
-      minesGameOver = false;
-      minesCashoutBtn.disabled = true;
-      minesMultipliers = minesMultipliersMap[ Number(minesModeSelect.value) ] || minesMultipliersMap[1];
-
-      // Place bombs
-      bombPositions.clear();
-      const bombsCount = Number(minesModeSelect.value);
-      while(bombPositions.size < bombsCount) {
-        bombPositions.add(Math.floor(Math.random() * MINES_SIZE));
-      }
-
-      resetMinesGrid();
-      updateMinesStats();
-      showToast('Mines game started!');
-
-      minesStartBtn.disabled = true;
-    }
-
-    function revealMinesCell(idx) {
-      if(minesGameOver) return;
-      const cell = minesCells[idx];
-      if(!cell || cell.classList.contains('revealed')) return;
-
-      cell.classList.add('revealed');
-      if(bombPositions.has(idx)) {
-        cell.classList.add('bomb');
-        cell.textContent = '💣';
-
-        // reveal all bombs
-        bombPositions.forEach(b => {
-          if(b === idx) return;
-          const c = minesCells[b];
-          if(c && !c.classList.contains('revealed')) {
-            c.classList.add('revealed', 'bomb');
-            c.textContent = '💣';
-          }
+  adminResetAll.addEventListener('click', async ()=>{
+    if(!cloudReady){ toast('Cloud not ready'); return; }
+    if(!confirm('Reset ALL progress for ALL users?')) return;
+    try{
+      const snap = await db.collection('users').get();
+      const batch = db.batch();
+      snap.forEach(doc=>{
+        const ref = db.collection('users').doc(doc.id);
+        batch.update(ref, {
+          balance:0, coins:0, cpc:0.05, rebirths:0, rebirthCost:100_000_000_000,
+          upgrades:{}, stats:{ slots_spins:0, slots_won:0, slots_profit:0, mines_plays:0, mines_profit:0, goals_profit:0 },
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-
-        minesGameOver = true;
-        minesCashoutBtn.disabled = true;
-        minesStartBtn.disabled = false;
-        showToast('Boom! You hit a bomb — bet lost 💥', 3000);
-      } else {
-        cell.classList.add('gem');
-        cell.textContent = '💎';
-        gemsFound++;
-        updateMinesStats();
-        minesCashoutBtn.disabled = false;
+      });
+      await batch.commit();
+      if(currentUID){
+        balance=0; coins=0; cpc=0.05; rebirths=0; rebirthCost=100_000_000_000; upgrades={}; stats={slots_spins:0, slots_won:0, slots_profit:0, mines_plays:0, mines_profit:0, goals_profit:0};
       }
+      await renderAdminAccounts();
+      await renderLeaderboard();
+      refreshHUD();
+      toast('All accounts reset');
+    }catch(e){
+      console.error(e);
+      toast('Reset failed');
     }
+  });
 
-    function updateMinesStats() {
-      minesGemsEl.textContent = gemsFound;
-      const idx = Math.min(gemsFound - 1, minesMultipliers.length -1);
-      const mult = gemsFound > 0 ? minesMultipliers[idx] : 1;
-      minesMultEl.textContent = mult.toFixed(2) + 'x';
-      minesMoneyEl.textContent = (minesBet * mult).toFixed(2);
-    }
+  admSave.addEventListener('click', async ()=>{
+    if(!cloudReady){ toast('Cloud not ready'); return; }
+    const uid = admUid.value.trim();
+    if(!uid){ toast('Select a valid user'); return; }
+    const val = Number(admBalance.value);
+    if(!Number.isFinite(val) || val<0){ toast('Enter a valid balance'); return; }
+    await db.collection('users').doc(uid).set({ balance: val, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge:true });
+    if(currentUID===uid){ balance = val; }
+    await renderAdminAccounts();
+    await renderLeaderboard();
+    refreshHUD();
+    toast('Changes saved');
+  });
 
-    function cashOutMines() {
-      if(minesGameOver) return;
-      if(gemsFound === 0) {
-        showToast('No gems found to cash out');
-        return;
-      }
-      const idx = Math.min(gemsFound - 1, minesMultipliers.length -1);
-      const mult = minesMultipliers[idx];
-      const winnings = minesBet * mult;
-      balance += winnings;
-      updateBalance(0);
-      showToast(`Cashed out $${winnings.toFixed(2)} — nice!`, 3000);
-      minesGameOver = true;
-      minesCashoutBtn.disabled = true;
-      minesStartBtn.disabled = false;
-    }
-
-    function updateMinesBet() {
-      let val = Number(minesBetInput.value);
-      if(isNaN(val) || val < 1) val = 1;
-      if(val > balance) val = balance;
-      minesBetInput.value = val;
-      minesStartBtn.disabled = val > balance || !minesGameOver;
-    }
-
-    minesBetInput.addEventListener('input', updateMinesBet);
-
-    minesStartBtn.addEventListener('click', startMinesGame);
-    minesCashoutBtn.addEventListener('click', cashOutMines);
-
-    // Switch between slot and mines tabs inside gambling section
-    const slotBtn = document.getElementById('slot-btn');
-    const minesBtn = document.getElementById('mines-btn');
-    const slotContainer = document.getElementById('slot-machine-container');
-    const minesContainer = document.getElementById('mines-container');
-
-    slotBtn.addEventListener('click', () => {
-      slotBtn.classList.add('active');
-      slotBtn.setAttribute('aria-selected', 'true');
-      slotBtn.setAttribute('tabindex', '0');
-      minesBtn.classList.remove('active');
-      minesBtn.setAttribute('aria-selected', 'false');
-      minesBtn.setAttribute('tabindex', '-1');
-      slotContainer.style.display = 'flex';
-      minesContainer.style.display = 'none';
+  admGive1k.addEventListener('click', async ()=>{
+    if(!cloudReady){ toast('Cloud not ready'); return; }
+    const uid = admUid.value.trim();
+    if(!uid){ toast('Select a valid user'); return; }
+    const ref = db.collection('users').doc(uid);
+    await db.runTransaction(async (tx)=>{
+      const snap = await tx.get(ref);
+      if(!snap.exists) return;
+      const cur = snap.data().balance||0;
+      tx.update(ref, { balance: cur + 1000, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
     });
-    minesBtn.addEventListener('click', () => {
-      minesBtn.classList.add('active');
-      minesBtn.setAttribute('aria-selected', 'true');
-      minesBtn.setAttribute('tabindex', '0');
-      slotBtn.classList.remove('active');
-      slotBtn.setAttribute('aria-selected', 'false');
-      slotBtn.setAttribute('tabindex', '-1');
-      slotContainer.style.display = 'none';
-      minesContainer.style.display = 'flex';
-    });
+    if(currentUID===uid){ balance += 1000; }
+    await renderAdminAccounts();
+    await renderLeaderboard();
+    refreshHUD();
+    toast('Gave +1,000');
+  });
 
-    // === Account & local save (fixed UI + handlers) ===
+  admWipe.addEventListener('click', async ()=>{
+    if(!cloudReady){ toast('Cloud not ready'); return; }
+    const uid = admUid.value.trim();
+    if(!uid){ toast('Select a valid user'); return; }
+    if(!confirm(`Wipe user "${uid}"?`)) return;
+    await db.collection('users').doc(uid).delete();
+    if(currentUID===uid){ await auth.signOut(); }
+    adminAccounts.innerHTML='';
+    admUid.value=''; admUsername.value=''; admBalance.value='';
+    await renderLeaderboard();
+    refreshHUD();
+    toast('User wiped');
+  });
 
-    // DOM references for account UI
-    const acctTabLogin = document.getElementById('acct-tab-login');
-    const acctTabRegister = document.getElementById('acct-tab-register');
-    const acctLoginForm = document.getElementById('acct-login-form');
-    const acctRegisterForm = document.getElementById('acct-register-form');
+  // ====== Money (Transfers) ======
+  async function populateMoney(){
+    if(currentUID){
+      moneyFrom.value = displayName || '(no username)';
+    }else{
+      moneyFrom.value = '(not logged in)';
+    }
+    moneyTo.innerHTML = '';
+    if(!cloudReady){ return; }
+    try{
+      const snap = await db.collection('users').orderBy('username').get();
+      snap.forEach(doc=>{
+        if(!currentUID || doc.id !== currentUID){
+          const u = doc.data();
+          const opt = document.createElement('option');
+          opt.value = doc.id; opt.textContent = u.username || doc.id;
+          moneyTo.appendChild(opt);
+        }
+      });
+    }catch(e){
+      console.error(e);
+    }
+  }
 
-    const loginUsername = document.getElementById('login-username');
-    const loginPassword = document.getElementById('login-password');
-    const loginBtn = document.getElementById('acct-login-btn');
+  moneySend.addEventListener('click', async ()=>{
+    if(!currentUID){ toast('Login to send money'); return; }
+    if(!cloudReady){ toast('Cloud not ready'); return; }
+    const toUid = moneyTo.value;
+    const amt = Number(moneyAmt.value);
+    if(!toUid){ toast('Choose a recipient'); return; }
+    if(!Number.isFinite(amt) || amt<=0){ toast('Enter valid amount'); return; }
+    if(toUid===currentUID){ toast('Cannot send to yourself'); return; }
 
-    const regUsername = document.getElementById('reg-username');
-    const regPassword = document.getElementById('reg-password');
-    const regPasswordConfirm = document.getElementById('reg-password-confirm');
-    const regBtn = document.getElementById('acct-register-btn');
+    const fromRef = db.collection('users').doc(currentUID);
+    const toRef = db.collection('users').doc(toUid);
 
-    const manualSaveBtn = document.getElementById('acct-manual-save');
-    const acctStatusEl = document.getElementById('acct-status');
+    try{
+      await db.runTransaction(async (tx)=>{
+        const fromSnap = await tx.get(fromRef);
+        const toSnap = await tx.get(toRef);
+        if(!fromSnap.exists) throw new Error('Sender not found');
+        if(!toSnap.exists) throw new Error('Recipient not found');
+        const fromBal = Number(fromSnap.data().balance||0);
+        if(amt > fromBal) throw new Error('Not enough balance');
+        tx.update(fromRef, { balance: fromBal - amt, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+        const toBal = Number(toSnap.data().balance||0);
+        tx.update(toRef, { balance: toBal + amt, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+      });
+      balance -= amt;
+      await renderLeaderboard();
+      refreshHUD();
+      toast(`Sent $${fmt(amt)} ✅`);
+      moneyAmt.value='';
+    }catch(e){
+      console.error(e);
+      toast(e.message || 'Transfer failed');
+    }
+  });
 
-    // current logged in user (lowercase) or null
-    let currentAccount = null;
-
-    // tab switching inside account panel
-    acctTabLogin.addEventListener('click', () => {
+  // ====== Account ======
+  function setForms(mode){ // 'login' | 'register'
+    if(mode==='login'){
       acctTabLogin.classList.add('active');
       acctTabRegister.classList.remove('active');
-      acctLoginForm.classList.remove('hidden');
-      acctRegisterForm.classList.add('hidden');
-    });
-    acctTabRegister.addEventListener('click', () => {
+      loginForm.style.display='';
+      regForm.style.display='none';
+    }else{
       acctTabRegister.classList.add('active');
       acctTabLogin.classList.remove('active');
-      acctRegisterForm.classList.remove('hidden');
-      acctLoginForm.classList.add('hidden');
-    });
-
-    // password hashing utilities (Web Crypto if available)
-    function generateSalt(len = 16) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let s = '';
-      for(let i=0;i<len;i++) s += chars[Math.floor(Math.random()*chars.length)];
-      return s;
+      loginForm.style.display='none';
+      regForm.style.display='';
     }
-    function bufToHex(buffer) {
-      const b = new Uint8Array(buffer);
-      let s = '';
-      for(let i=0;i<b.length;i++) s += b[i].toString(16).padStart(2,'0');
-      return s;
-    }
-    async function hashPassword(password, salt) {
-      const input = password + '||' + salt;
-      if(window.crypto && crypto.subtle && crypto.subtle.digest) {
-        const enc = new TextEncoder();
-        const data = enc.encode(input);
-        const digest = await crypto.subtle.digest('SHA-256', data);
-        return bufToHex(digest);
-      } else {
-        return btoa(input);
-      }
-    }
+  }
+  acctTabLogin.addEventListener('click', ()=>setForms('login'));
+  acctTabRegister.addEventListener('click', ()=>setForms('register'));
 
-    // local users stored as JSON under 'mmc_local_users'
-    function readUsers() {
-      try {
-        const raw = localStorage.getItem('mmc_local_users');
-        return raw ? JSON.parse(raw) : {};
-      } catch (e) { return {}; }
+  loginBtn.addEventListener('click', async ()=>{
+    if(!cloudReady){ toast('Cloud not ready'); return; }
+    const email = (loginEmail.value||'').trim();
+    const pass = loginPass.value;
+    if(!email || !pass){ toast('Enter email and password'); return; }
+    try{
+      await auth.signInWithEmailAndPassword(email, pass);
+      toast('Welcome back!');
+    }catch(e){ toast(e.message||'Login failed'); }
+  });
+
+  logoutBtn.addEventListener('click', async ()=>{
+    try{ await auth.signOut(); }catch(e){ console.error(e); }
+  });
+
+  regBtn.addEventListener('click', async ()=>{
+    if(!cloudReady){ toast('Cloud not ready'); return; }
+    const username = (regUsername.value||'').trim();
+    const email = (regEmail.value||'').trim();
+    const p1 = regPass.value;
+    const p2 = regPass2.value;
+    if(!username || !email || !p1 || !p2){ toast('Fill all fields'); return; }
+    if(p1!==p2){ toast('Passwords do not match'); return; }
+    try{
+      const cred = await auth.createUserWithEmailAndPassword(email, p1);
+      const uid = cred.user.uid;
+      await db.collection('users').doc(uid).set({
+        username,
+        email,
+        balance:0, coins:0, cpc:0.05, rebirths:0, rebirthCost:100_000_000_000,
+        upgrades:{},
+        stats:{ slots_spins:0, slots_won:0, slots_profit:0, mines_plays:0, mines_profit:0, goals_profit:0 },
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      toast('Account created');
+      setForms('login');
+      loginEmail.value = email;
+    }catch(e){
+      console.error(e); toast(e.message||'Register failed');
     }
-    function writeUsers(users) {
-      localStorage.setItem('mmc_local_users', JSON.stringify(users));
-    }
+  });
 
-    // Register handler
-    regBtn.addEventListener('click', async () => {
-      const u = String(regUsername.value || '').trim();
-      const p = String(regPassword.value || '');
-      const pc = String(regPasswordConfirm.value || '');
-      if(!u || !p || !pc) { showToast('Fill all fields'); return; }
-      if(u.length < 2) { showToast('Username too short'); return; }
-      if(p.length < 4) { showToast('Password too short (min 4)'); return; }
-      if(p !== pc) { showToast('Passwords do not match'); return; }
+  manualSaveBtn.addEventListener('click', async ()=>{
+    await persist();
+    toast('Saved.');
+  });
 
-      try {
-        const users = readUsers();
-        const uname = u.toLowerCase();
-        if(users[uname]) { showToast('Username already exists'); return; }
-        const salt = generateSalt(16);
-        const hash = await hashPassword(p, salt);
-        users[uname] = { salt, hash, createdAt: Date.now() };
-        writeUsers(users);
-        currentAccount = uname;
-        acctStatusEl.textContent = `Logged in as ${currentAccount}`;
-        // try to load existing save (if any)
-        if(loadLocal()) showToast('Account created — save loaded');
-        else showToast('Account created');
-        // clear register fields for privacy
-        regPassword.value = regPasswordConfirm.value = '';
-      } catch (err) {
-        console.error(err);
-        showToast('Register error: ' + (err.message || err));
-      }
-    });
-
-    // Login handler
-    loginBtn.addEventListener('click', async () => {
-      const u = String(loginUsername.value || '').trim();
-      const p = String(loginPassword.value || '');
-      if(!u || !p) { showToast('Fill username and password'); return; }
-      try {
-        const users = readUsers();
-        const uname = u.toLowerCase();
-        const rec = users[uname];
-        if(!rec) { showToast('Invalid username or password'); return; }
-        const candidate = await hashPassword(p, rec.salt);
-        if(candidate !== rec.hash) { showToast('Invalid username or password'); return; }
-        currentAccount = uname;
-        acctStatusEl.textContent = `Logged in as ${currentAccount}`;
-        if(loadLocal()) showToast('Logged in — save loaded');
-        else showToast('Logged in (no save found)');
-        // clear login fields for privacy
-        loginPassword.value = '';
-      } catch (err) {
-        console.error(err);
-        showToast('Login error: ' + (err.message || err));
+  // ====== Auth listener ======
+  async function startAuthListener(){
+    auth.onAuthStateChanged(async (user)=>{
+      if(user){
+        currentUID = user.uid;
+        await pullOrInitUser();
+        acctStatus.textContent = `Logged in as ${displayName} — Rebirths: ${rebirths||0}`;
+        refreshHUD();
+        renderLeaderboard();
+      }else{
+        currentUID = null;
+        currentUser = null;
+        displayName = '';
+        acctStatus.textContent = 'Not logged in';
+        refreshHUD();
       }
     });
+  }
 
-    // Save/load helpers (localStorage)
-    function buildSavePayload() {
-      return {
-        balance,
-        coins,
-        coinsPerClick,
-        upgrades: upgradesData.map(u => ({ name: u.name, level: u.level, cost: u.cost })),
-        mines: { gemsFound, minesBet, minesGameOver },
-        timestamp: Date.now()
-      };
+  async function pullOrInitUser(){
+    if(!currentUID || !cloudReady) return;
+    const ref = db.collection('users').doc(currentUID);
+    let snap = await ref.get();
+    if(!snap.exists){
+      const email = auth.currentUser?.email || '';
+      const username = auth.currentUser?.email?.split('@')[0] || 'Player';
+      await ref.set({
+        username, email,
+        balance:0, coins:0, cpc:0.05, rebirths:0, rebirthCost:100_000_000_000,
+        upgrades:{},
+        stats:{ slots_spins:0, slots_won:0, slots_profit:0, mines_plays:0, mines_profit:0, goals_profit:0 },
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      snap = await ref.get();
     }
-    async function saveLocal(userInitiated=false) {
-      try {
-        const payload = buildSavePayload();
-        const key = currentAccount ? `mmc_save_${currentAccount}` : 'mmc_save_guest';
-        localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), save: payload }));
-        if(userInitiated) showToast(currentAccount ? 'Saved (local)' : 'Saved (guest)');
-        return true;
-      } catch (err) {
-        console.error('saveLocal', err);
-        if(userInitiated) showToast('Save failed: ' + err.message);
-        return false;
-      }
+    currentUser = snap.data() || {};
+
+    // pull into local
+    displayName = currentUser.username || 'Player';
+    balance = Number(currentUser.balance||0);
+    coins = Number(currentUser.coins||0);
+    cpc = Number(currentUser.cpc||0.05);
+    rebirths = Number(currentUser.rebirths||0);
+    rebirthCost = Number(currentUser.rebirthCost||100_000_000_000);
+    upgrades = currentUser.upgrades || {};
+    stats = Object.assign({
+      slots_spins:0, slots_won:0, slots_profit:0, mines_plays:0, mines_profit:0, goals_profit:0
+    }, currentUser.stats||{});
+  }
+
+  // ====== Persistence ======
+  async function persist(){
+    if(!currentUID || !cloudReady) { refreshHUD(); return; }
+    try{
+      const ref = db.collection('users').doc(currentUID);
+      await ref.set({
+        username: displayName || currentUser?.username || 'Player',
+        balance, coins, cpc, rebirths, rebirthCost,
+        upgrades,
+        stats,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge:true });
+      acctStatus.textContent = `Logged in as ${displayName} — Rebirths: ${rebirths||0}`;
+    }catch(e){
+      console.error(e);
     }
-    function loadLocal() {
-      try {
-        const key = currentAccount ? `mmc_save_${currentAccount}` : 'mmc_save_guest';
-        const raw = localStorage.getItem(key);
-        if(!raw) return false;
-        const parsed = JSON.parse(raw);
-        if(parsed && parsed.save) {
-          applySavePayload(parsed.save);
-          return true;
-        }
-        return false;
-      } catch (err) {
-        console.error('loadLocal', err);
-        return false;
-      }
+  }
+  async function persistShallow(){
+    // lighter writes during rapid play
+    if(!currentUID || !cloudReady) return;
+    try{
+      const ref = db.collection('users').doc(currentUID);
+      await ref.set({
+        balance, coins, cpc,
+        stats,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge:true });
+    }catch(e){
+      console.error(e);
     }
-    function applySavePayload(payload) {
-      try {
-        if(typeof payload.balance === 'number') balance = payload.balance;
-        if(typeof payload.coins === 'number') coins = payload.coins;
-        if(typeof payload.coinsPerClick === 'number') coinsPerClick = payload.coinsPerClick;
-        if(Array.isArray(payload.upgrades)) {
-          payload.upgrades.forEach(sv => {
-            const upg = upgradesData.find(u => u.name === sv.name);
-            if(upg) {
-              upg.level = sv.level || 0;
-              upg.cost = sv.cost || upg.baseCost;
-            }
-          });
-        }
-        if(payload.mines) {
-          gemsFound = payload.mines.gemsFound || 0;
-          minesBet = payload.mines.minesBet || minesBet;
-          minesGameOver = payload.mines.minesGameOver !== undefined ? payload.mines.minesGameOver : minesGameOver;
-        }
-        updateBalance(0);
-        coinsEl.textContent = coins.toFixed(2);
-        updateCPC();
-        buildUpgrades();
-        resetMinesGrid();
-      } catch (err) {
-        console.error('applySavePayload error', err);
-      }
-    }
+  }
 
-    // Manual save button
-    manualSaveBtn.addEventListener('click', async () => {
-      await saveLocal(true);
-    });
+  // Auto-save every 60s
+  setInterval(()=>{ persist(); }, 60_000);
 
-    // auto-save every 60s
-    let autoSaveInterval = null;
-    function startAutoSaveTimer() {
-      if(autoSaveInterval) clearInterval(autoSaveInterval);
-      autoSaveInterval = setInterval(() => {
-        saveLocal(false);
-      }, 60_000);
-    }
+  // ====== Gambling sub-tabs ======
+  const gtSlot = qs('#gt-slot');
+  const gtMines = qs('#gt-mines');
+  const gtGoals = qs('#gt-goals');
+  const slotPane = qs('#slot-machine');
+  const minesPane = qs('#mines');
+  const goalsPane = qs('#goals');
 
-    // load guest save on startup
-    function tryLoadGuestSave() {
-      const raw = localStorage.getItem('mmc_save_guest');
-      if(raw) {
-        try {
-          const parsed = JSON.parse(raw);
-          if(parsed && parsed.save) {
-            applySavePayload(parsed.save);
-            showToast('Loaded guest save', 1000);
-          }
-        } catch (e) { /* ignore parse errors */ }
-      }
-    }
+  function showGame(btn){
+    [gtSlot,gtMines,gtGoals].forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    [slotPane,minesPane,goalsPane].forEach(p=>p.style.display='none');
 
-    // Save on unload
-    window.addEventListener('beforeunload', () => {
-      try { saveLocal(false); } catch (e) {}
-    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+    if(btn===gtSlot) slotPane.style.display='block';
+    if(btn===gtMines) minesPane.style.display='block';
+    if(btn===gtGoals) goalsPane.style.display='block';
+  }
+  gtSlot.addEventListener('click', ()=>showGame(gtSlot));
+  gtMines.addEventListener('click', ()=>showGame(gtMines));
+  gtGoals.addEventListener('click', ()=>showGame(gtGoals));
 
-    // initialize
-    function init() {
-      updateBalance(0);
-      buildUpgrades();
-      updateCPC();
-      updateRebirthButton();
-      updateSlotBet();
-      updateMinesBet();
-      resetMinesGrid();
-      startAutoSaveTimer();
-      tryLoadGuestSave();
-    }
-    init();
-
-    // Expose manualSave to window if you need it
-    window.manualSave = () => saveLocal(true);
-
-    // End of script
+  // ====== Start ======
+  async function firstRun(){
+    await initFirebase();
+    // If initial read failed because of locked rules, we'll still mark cloudReady on first successful auth write
+    resetMinesGrid();
+    buildGoalsGrid();
+    refreshHUD();
+    await startAuthListener();
+  }
+  firstRun();
   </script>
 </body>
 </html>
